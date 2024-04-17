@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { api } from "../config/api";
 import Cookies from "js-cookie";
 import { IUser } from "../interfaces/user";
-import axios from "axios";
 
 export type AuthCredentials = {
   email: string;
