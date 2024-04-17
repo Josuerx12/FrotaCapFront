@@ -38,7 +38,7 @@ const Navbar = () => {
       <nav className="w-full h-28 px-4 z-30 fixed bg-neutral-800 flex items-center justify-between drop-shadow-lg">
         <div
           title="FrotasCAP - Pagina Inicial"
-          className="flex gap-2 text-white items-center cursor-pointer hover:scale-105 duration-200 ease-linear bg-gradient-to-br to-gray-500 from-sky-500 p-2 drop-shadow-xl rounded-xl"
+          className="flex gap-2 text-white items-center cursor-pointer hover:scale-105 bg-size-200 bg-pos-0 hover:bg-pos-100 bg-gradient-to-br to-gray-500 via-sky-500 from-gray-500 duration-300 ease-linear transition-all p-2 drop-shadow-xl rounded-xl"
         >
           <h1 className="font-signature text-5xl font-bold  drop-shadow-lg">
             Frotascap
@@ -51,7 +51,7 @@ const Navbar = () => {
             <li
               key={i}
               onClick={() => navigate(path)}
-              className={`cursor-pointer  relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
                 pagePath.pathname === path
                   ? "scale-105 text-gray-300"
                   : "scale-100 text-white"
@@ -60,7 +60,10 @@ const Navbar = () => {
               {name}
             </li>
           ))}
-          <li className="flex gap-1 items-center cursor-pointer bg-gradient-to-br font-semibold transition-colors duration-300 ease-linear to-sky-900 from-sky-500 hover:bg-none hover:bg-sky-500 px-2 py-1 rounded-md tracking-wider">
+          <li
+            onClick={() => navigate("/login")}
+            className="cursor-pointer flex items-center gap-2 bg-gradient-to-r font-semibold transition-all duration-300 ease-linear to-sky-400 via-blue-500  from-sky-400 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+          >
             Login <BiLogIn />
           </li>
         </ul>
@@ -95,7 +98,7 @@ const Navbar = () => {
           Solicitações
         </li>
 
-        <li className="cursor-pointer bg-gradient-to-br font-semibold transition-colors duration-300 ease-linear to-sky-400 from-blue-500 hover:bg-gradient-to-br hover:to-blue-500 hover:from-sky-400 px-2 py-1 rounded-md tracking-wider">
+        <li className="cursor-pointer bg-gradient-to-br font-semibold transition-colors duration-300 ease-linear to-sky-400 via-blue-500  from-sky-400 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider">
           Login
         </li>
       </ul>

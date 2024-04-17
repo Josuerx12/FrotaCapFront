@@ -5,19 +5,15 @@ const api = (token?: string) => {
 
   if (token) {
     return (connection = axios.create({
-      baseURL: "https://almox-system.vercel.app",
+      baseURL: "https://frota-cap.vercel.app/",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     }));
   }
 
   connection = axios.create({
-    baseURL: "https://almox-system.vercel.app",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    baseURL: "https://frota-cap.vercel.app/",
   });
 
   return connection;
