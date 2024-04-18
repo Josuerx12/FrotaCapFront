@@ -1,37 +1,22 @@
 import { useState } from "react";
-import { BiLogIn } from "react-icons/bi";
-import { FaBars, FaCar, FaTimes } from "react-icons/fa";
+import {
+  FaBars,
+  FaCar,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaTimes,
+} from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/useAuth";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const items = [
-    {
-      path: "/",
-      name: "inicio",
-    },
-    {
-      path: "/oficina",
-      name: "oficina",
-    },
-    {
-      path: "/frotas",
-      name: "frotas",
-    },
-    {
-      path: "/gestao",
-      name: "gestão",
-    },
-    {
-      path: "/solicitacoes",
-      name: "solicitações",
-    },
-  ];
-
   const navigate = useNavigate();
 
   const pagePath = useLocation();
+
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -47,25 +32,82 @@ const Navbar = () => {
         </div>
 
         <ul className="hidden text-white text-lg md:flex items-center gap-3">
-          {items.map(({ path, name }, i) => (
+          <li
+            onClick={() => navigate("/")}
+            className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              pagePath.pathname === "/"
+                ? "scale-105 text-gray-300"
+                : "scale-100 text-white"
+            }`}
+          >
+            Inicio
+          </li>
+          {user && (
             <li
-              key={i}
-              onClick={() => navigate(path)}
+              onClick={() => navigate("/solicitacoes")}
               className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
-                pagePath.pathname === path
+                pagePath.pathname === "/solicitacoes"
                   ? "scale-105 text-gray-300"
                   : "scale-100 text-white"
               }`}
             >
-              {name}
+              Solicitações
             </li>
-          ))}
-          <li
-            onClick={() => navigate("/login")}
-            className="cursor-pointer flex items-center gap-2 bg-gradient-to-r font-semibold transition-all duration-300 ease-linear to-sky-400 via-blue-500  from-sky-400 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
-          >
-            Login <BiLogIn />
-          </li>
+          )}
+          {user && user.position.includes("admin") && (
+            <li
+              onClick={() => navigate("/gestao")}
+              className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+                pagePath.pathname === "/gestao"
+                  ? "scale-105 text-gray-300"
+                  : "scale-100 text-white"
+              }`}
+            >
+              Gestão
+            </li>
+          )}
+
+          {user && user.position.includes("frotas") && (
+            <li
+              onClick={() => navigate("/frotas")}
+              className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+                pagePath.pathname === "/frotas"
+                  ? "scale-105 text-gray-300"
+                  : "scale-100 text-white"
+              }`}
+            >
+              Frotas
+            </li>
+          )}
+
+          {user && user.position.includes("oficina") && (
+            <li
+              onClick={() => navigate("/oficina")}
+              className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+                pagePath.pathname === "/oficina"
+                  ? "scale-105 text-gray-300"
+                  : "scale-100 text-white"
+              }`}
+            >
+              Oficina
+            </li>
+          )}
+          {!user && (
+            <li
+              onClick={() => navigate("/login")}
+              className="cursor-pointer flex items-center gap-2 bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+            >
+              Login <FaSignInAlt />
+            </li>
+          )}
+          {user && (
+            <li
+              onClick={logout}
+              className="flex items-center gap-1 cursor-pointer bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-red-600 via-red-300  from-red-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+            >
+              Sair <FaSignOutAlt />
+            </li>
+          )}
         </ul>
 
         <button
@@ -82,25 +124,103 @@ const Navbar = () => {
           mobileOpen ? "top-0" : "-top-full"
         }`}
       >
-        <li className="cursor-pointer hover:text-gray-300 tracking-wider">
-          Incio
+        <li
+          onClick={() => {
+            navigate("/");
+            setMobileOpen((prev) => !prev);
+          }}
+          className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            pagePath.pathname === "/"
+              ? "scale-105 text-gray-300"
+              : "scale-100 text-white"
+          }`}
+        >
+          Inicio
         </li>
-        <li className="cursor-pointer hover:text-gray-300 tracking-wider">
-          Oficina
-        </li>
-        <li className="cursor-pointer hover:text-gray-300 tracking-wider">
-          Frotas
-        </li>
-        <li className="cursor-pointer hover:text-gray-300 tracking-wider">
-          Gestão
-        </li>
-        <li className="cursor-pointer hover:text-gray-300 tracking-wider">
-          Solicitações
-        </li>
+        {user && (
+          <li
+            onClick={() => {
+              navigate("/solicitacoes");
+              setMobileOpen((prev) => !prev);
+            }}
+            className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              pagePath.pathname === "/solicitacoes"
+                ? "scale-105 text-gray-300"
+                : "scale-100 text-white"
+            }`}
+          >
+            Solicitações
+          </li>
+        )}
+        {user && user.position.includes("admin") && (
+          <li
+            onClick={() => {
+              navigate("/gestao");
+              setMobileOpen((prev) => !prev);
+            }}
+            className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              pagePath.pathname === "/gestao"
+                ? "scale-105 text-gray-300"
+                : "scale-100 text-white"
+            }`}
+          >
+            Gestão
+          </li>
+        )}
 
-        <li className="cursor-pointer bg-gradient-to-br font-semibold transition-colors duration-300 ease-linear to-sky-400 via-blue-500  from-sky-400 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider">
-          Login
-        </li>
+        {user && user.position.includes("frotas") && (
+          <li
+            onClick={() => {
+              navigate("/frotas");
+              setMobileOpen((prev) => !prev);
+            }}
+            className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              pagePath.pathname === "/frotas"
+                ? "scale-105 text-gray-300"
+                : "scale-100 text-white"
+            }`}
+          >
+            Frotas
+          </li>
+        )}
+
+        {user && user.position.includes("oficina") && (
+          <li
+            onClick={() => {
+              navigate("/oficina");
+              setMobileOpen((prev) => !prev);
+            }}
+            className={`cursor-pointer capitalize relative hover:text-gray-300 hover:scale-105  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              pagePath.pathname === "/oficina"
+                ? "scale-105 text-gray-300"
+                : "scale-100 text-white"
+            }`}
+          >
+            Oficina
+          </li>
+        )}
+        {!user && (
+          <li
+            onClick={() => {
+              navigate("/login");
+              setMobileOpen((prev) => !prev);
+            }}
+            className="cursor-pointer flex items-center gap-2 bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+          >
+            Login <FaSignInAlt />
+          </li>
+        )}
+        {user && (
+          <li
+            onClick={() => {
+              logout();
+              setMobileOpen((prev) => !prev);
+            }}
+            className="flex items-center gap-1 cursor-pointer bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-red-600 via-red-300  from-red-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+          >
+            Sair <FaSignOutAlt />
+          </li>
+        )}
       </ul>
     </>
   );

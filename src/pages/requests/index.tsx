@@ -1,11 +1,15 @@
 import { useQuery } from "react-query";
 import NewRequestFolder from "../../components/folders/newRequest";
 import { useFetch } from "../../hooks/useFetch";
+import { useFilter } from "../../hooks/useFilter";
+import InSchedulingFolder from "../../components/folders/inScheduling";
 
 const Requests = () => {
   const { fetchAllMaintenceRequests } = useFetch();
 
   const { data, isLoading } = useQuery("allReq", fetchAllMaintenceRequests);
+
+  const { newRequests, schedulingRequests } = useFilter(data);
 
   return (
     <div className="pt-32 w-full h-screen">
@@ -17,7 +21,12 @@ const Requests = () => {
         {isLoading ? (
           <p>Carregando...</p>
         ) : (
-          data && <NewRequestFolder requests={data} />
+          <>
+            {newRequests && <NewRequestFolder requests={newRequests} />}
+            {schedulingRequests && (
+              <InSchedulingFolder requests={schedulingRequests} />
+            )}
+          </>
         )}
       </div>
     </div>

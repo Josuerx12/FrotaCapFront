@@ -25,7 +25,9 @@ const useAuth = create<State & Actions>((set) => ({
     try {
       const res = await api().post("/auth/login", credentials);
 
-      Cookies.set("token", res.data.token);
+      const token = res.data.token;
+
+      Cookies.set("refreshToken", token);
 
       return "Login realizado com sucesso!";
     } catch (error: any) {
@@ -33,10 +35,10 @@ const useAuth = create<State & Actions>((set) => ({
     }
   },
   getUser: async () => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("refreshToken");
 
     try {
-      const res = await (await api(token).get("/auth/user")).data.user;
+      const res = await (await api(token).get("/user/profile")).data.user;
 
       set(() => ({ user: res, errors: null }));
 
@@ -46,7 +48,7 @@ const useAuth = create<State & Actions>((set) => ({
     }
   },
   logout: () => {
-    Cookies.remove("token");
+    Cookies.remove("refreshToken");
     set(() => ({ user: undefined }));
   },
 }));

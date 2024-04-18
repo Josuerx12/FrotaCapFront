@@ -1,8 +1,11 @@
+import { IUser } from "./user";
+
 export interface IMaintenceRequest {
   id: number;
   plate: string;
   driverName: string;
   km: number;
+  ownerOfReq: IUser;
   ownerOfReqId: string;
   observation?: string;
   deadlineToForward?: Date | string;

@@ -10,6 +10,7 @@ import ErrorLabel from "../../components/errorLabel";
 type MutationError = {
   email?: string;
   password?: string;
+  message?: string;
 };
 
 const Login = () => {
@@ -22,16 +23,17 @@ const Login = () => {
     MutationError,
     AuthCredentials
   >("login", login, {
-    onSuccess: async (data) => {
-      toast.success(data);
-      await getUser()
-        .then((res) => toast.success(res))
-        .catch((err) => {
-          toast.error("Error ao coletar os dados do usuário!");
-          console.log(err.message);
-        });
-      reset();
-    },
+    onSuccess: (data) =>
+      Promise.all([
+        toast.success(data),
+        getUser()
+          .then((res) => toast.success(res))
+          .catch((err) => {
+            toast.error("Error ao coletar os dados do usuário!");
+            console.log(err.message);
+          }),
+        reset(),
+      ]),
   });
 
   async function onAuth(data: AuthCredentials) {
@@ -85,10 +87,10 @@ const Login = () => {
                 />
               )}
             </div>
-            {error?.password && <ErrorLabel>{error.password}</ErrorLabel>}
           </div>
+          {error?.password && <ErrorLabel>{error.password}</ErrorLabel>}
         </div>
-
+        {error?.message && <ErrorLabel>{error.message}</ErrorLabel>}
         <button
           type="submit"
           className="text-2xl bg-gray-800 hover:bg-gray-600 duration-200 ease-linear w-fit mx-auto py-2 px-3 rounded-lg text-white"
