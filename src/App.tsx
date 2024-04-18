@@ -8,6 +8,7 @@ import Login from "./pages/login";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useAuth } from "./store/useAuth";
+import Admin from "./pages/admin";
 
 const App = () => {
   const { getUser, user } = useAuth();
@@ -26,6 +27,16 @@ const App = () => {
         <Route
           path="/solicitacoes"
           element={user ? <Requests /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/gestao"
+          element={
+            user && user.position.includes("admin") ? (
+              <Admin />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/login"

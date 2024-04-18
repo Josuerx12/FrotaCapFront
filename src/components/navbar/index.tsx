@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full h-28 px-4 z-30 fixed bg-neutral-800 flex items-center justify-between drop-shadow-lg">
+      <nav className="w-full h-20 px-4 z-30 fixed bg-neutral-800 flex items-center justify-between drop-shadow-lg">
         <div
           title="FrotasCAP - Pagina Inicial"
           className="flex gap-2 text-white items-center cursor-pointer hover:scale-105 bg-size-200 bg-pos-0 hover:bg-pos-100 bg-gradient-to-br to-gray-500 via-sky-500 from-gray-500 duration-300 ease-linear transition-all p-2 drop-shadow-xl rounded-xl"
@@ -120,7 +120,7 @@ const Navbar = () => {
       </nav>
 
       <ul
-        className={`fixed z-10 duration-300 transition-all ease-linear text-white text-3xl flex gap-6 flex-col h-screen justify-center items-center w-full bg-neutral-800 ${
+        className={`fixed z-20 duration-300 transition-all ease-linear text-white text-3xl flex gap-6 flex-col h-screen justify-center items-center w-full bg-neutral-800 ${
           mobileOpen ? "top-0" : "-top-full"
         }`}
       >

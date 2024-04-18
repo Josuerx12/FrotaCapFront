@@ -12,7 +12,7 @@ const Requests = () => {
   const { newRequests, schedulingRequests } = useFilter(data);
 
   return (
-    <div className="pt-32 w-full h-screen">
+    <div className="pt-24 w-full h-screen">
       <h3 className="text-2xl font-bold text-center capitalize">
         Solicitações
       </h3>
