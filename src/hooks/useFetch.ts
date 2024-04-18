@@ -35,10 +35,13 @@ function useFetch() {
     }
   }
 
+  async function fetchUsers() {}
+
   return {
     fetchAllMaintenceRequests,
     fetchUserMaintenceRequests,
     fetchWorkShopMaintenceRequests,
+    fetchUsers,
   };
 }
 
