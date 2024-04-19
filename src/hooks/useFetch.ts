@@ -3,6 +3,7 @@
 import Cookies from "js-cookie";
 import { api } from "../config/api";
 import { IMaintenceRequest } from "../interfaces/maintanceRequest";
+import { IUser } from "../interfaces/user";
 
 function useFetch() {
   const token = Cookies.get("refreshToken");
@@ -35,7 +36,14 @@ function useFetch() {
     }
   }
 
-  async function fetchUsers() {}
+  async function fetchUsers(): Promise<IUser[]> {
+    try {
+      const res = (await api(token).get("/user")).data.users;
+      return res;
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
   return {
     fetchAllMaintenceRequests,

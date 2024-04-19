@@ -69,7 +69,7 @@ const Login = () => {
               placeholder="********"
               {...register("password")}
               className="flex-1 p-2 rounded outline-sky-700"
-            />{" "}
+            />
             <div
               className="bg-gray-800 p-2 rounded cursor-pointer group"
               title="Vizualizar a senha"

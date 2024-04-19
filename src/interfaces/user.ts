@@ -8,3 +8,11 @@ export interface IUser {
   position: string[];
   MaintenceRequest: IMaintenceRequest[];
 }
+
+export interface ICreateUserCredentials {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
