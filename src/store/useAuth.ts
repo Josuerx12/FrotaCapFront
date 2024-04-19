@@ -38,7 +38,9 @@ const useAuth = create<State & Actions>((set) => ({
     const token = Cookies.get("refreshToken");
 
     try {
-      const res = await (await api(token).get("/user/profile")).data.user;
+      const res = await (
+        await api(token).get("/user/profile/detail")
+      ).data.user;
 
       set(() => ({ user: res, errors: null }));
 

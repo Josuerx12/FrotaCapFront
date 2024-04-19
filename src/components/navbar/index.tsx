@@ -55,7 +55,7 @@ const Navbar = () => {
               Solicitações
             </li>
           )}
-          {user && user.position.includes("admin") && (
+          {user && user.admin && (
             <li
               onClick={() => navigate("/gestao")}
               className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
@@ -68,7 +68,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {user && user.position.includes("frotas") && (
+          {user && user.frotas && (
             <li
               onClick={() => navigate("/frotas")}
               className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
@@ -81,7 +81,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {user && user.position.includes("oficina") && (
+          {user && user.workshop && (
             <li
               onClick={() => navigate("/oficina")}
               className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
@@ -153,7 +153,7 @@ const Navbar = () => {
             Solicitações
           </li>
         )}
-        {user && user.position.includes("admin") && (
+        {user && user.admin && (
           <li
             onClick={() => {
               navigate("/gestao");
@@ -169,7 +169,7 @@ const Navbar = () => {
           </li>
         )}
 
-        {user && user.position.includes("frotas") && (
+        {user && user.frotas && (
           <li
             onClick={() => {
               navigate("/frotas");
@@ -185,7 +185,7 @@ const Navbar = () => {
           </li>
         )}
 
-        {user && user.position.includes("oficina") && (
+        {user && user.workshop && (
           <li
             onClick={() => {
               navigate("/oficina");

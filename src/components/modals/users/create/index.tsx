@@ -116,6 +116,29 @@ const CreateUserModal = ({ show, handleClose }: Props) => {
           />
         </div>
 
+        <div className="flex gap-4">
+          <div className="flex gap-2 items-center">
+            <input type="checkbox" className="w-4 h-4" {...register("admin")} />
+            <label>Administrador</label>
+          </div>
+          <div className="flex gap-2 items-center">
+            <input
+              type="checkbox"
+              className="w-4 h-4"
+              {...register("workshop")}
+            />
+            <label>Oficina</label>
+          </div>
+          <div className="flex gap-2 items-center">
+            <input
+              type="checkbox"
+              className="w-4 h-4"
+              {...register("frotas")}
+            />
+            <label>Frota</label>
+          </div>
+        </div>
+
         {error && error.message && <ErrorLabel>{error.message[0]}</ErrorLabel>}
 
         <div className="flex items-center justify-center gap-4">

@@ -30,13 +30,7 @@ const App = () => {
         />
         <Route
           path="/gestao"
-          element={
-            user && user.position.includes("admin") ? (
-              <Admin />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={user && user.admin ? <Admin /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
