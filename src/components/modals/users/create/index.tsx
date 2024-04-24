@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Modal from "../../modal";
-import { FaEye, FaEyeSlash, FaPlus, FaTimes } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaPlus, FaSpinner, FaTimes } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { ICreateUserCredentials } from "../../../../interfaces/user";
@@ -26,7 +26,7 @@ const CreateUserModal = ({ show, handleClose }: Props) => {
   const { register, handleSubmit, reset } = useForm<ICreateUserCredentials>();
   const query = useQueryClient();
 
-  const { mutateAsync, error } = useMutation<
+  const { mutateAsync, error, isLoading } = useMutation<
     any,
     MutationError,
     ICreateUserCredentials
@@ -144,16 +144,28 @@ const CreateUserModal = ({ show, handleClose }: Props) => {
         <div className="flex items-center justify-center gap-4">
           <button
             type="button"
+            disabled={isLoading}
             onClick={() => {
               reset();
               handleClose();
             }}
-            className="w-1/2 flex justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-rose-400 via-red-500 to-red-700"
+            className="w-1/2 flex disabled:bg-red-400 justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-rose-400 via-red-500 to-red-700"
           >
             <FaTimes /> Cancelar
           </button>
-          <button className="w-1/2  flex justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-green-400 via-emerald-400 to-emerald-600">
-            <FaPlus /> Cadastrar
+          <button
+            disabled={isLoading}
+            className="w-1/2 disabled:bg-blue-600  flex justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-green-400 via-emerald-400 to-emerald-600"
+          >
+            {isLoading ? (
+              <>
+                <FaSpinner className="animate-spin" /> Cadastrando
+              </>
+            ) : (
+              <>
+                <FaPlus /> Cadastrar
+              </>
+            )}
           </button>
         </div>
       </form>

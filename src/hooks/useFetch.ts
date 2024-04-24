@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { api } from "../config/api";
 import { IMaintenceRequest } from "../interfaces/maintanceRequest";
 import { IUser } from "../interfaces/user";
+import { IVehicle } from "../interfaces/vehicle";
+import { IProvider } from "../interfaces/provider";
 
 function useFetch() {
   const token = Cookies.get("refreshToken");
@@ -12,7 +14,7 @@ function useFetch() {
       const res = (await api(token).get("/maintance-request")).data.requests;
       return res;
     } catch (error: any) {
-      throw error;
+      throw error.response.data;
     }
   }
   async function fetchUserMaintenceRequests(): Promise<IMaintenceRequest[]> {
@@ -21,7 +23,7 @@ function useFetch() {
         .requests;
       return res;
     } catch (error: any) {
-      throw error;
+      throw error.response.data;
     }
   }
   async function fetchWorkShopMaintenceRequests(): Promise<
@@ -32,7 +34,7 @@ function useFetch() {
         .requests;
       return res;
     } catch (error: any) {
-      throw error;
+      throw error.response.data;
     }
   }
 
@@ -41,7 +43,25 @@ function useFetch() {
       const res = (await api(token).get("/user")).data.users;
       return res;
     } catch (error: any) {
-      throw error;
+      throw error.response.data;
+    }
+  }
+
+  async function fetchVehicles(): Promise<IVehicle[]> {
+    try {
+      const res = (await api(token).get("/vehicle")).data.vehicles;
+      return res;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  }
+
+  async function fetchProviders(): Promise<IProvider[]> {
+    try {
+      const res = (await api(token).get("/provider")).data.providers;
+      return res;
+    } catch (error: any) {
+      throw error.response.data;
     }
   }
 
@@ -50,6 +70,8 @@ function useFetch() {
     fetchUserMaintenceRequests,
     fetchWorkShopMaintenceRequests,
     fetchUsers,
+    fetchVehicles,
+    fetchProviders,
   };
 }
 

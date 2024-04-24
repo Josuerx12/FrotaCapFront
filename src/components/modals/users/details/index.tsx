@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { useState } from "react";
 import Modal from "../../modal";
 import { IUser } from "../../../../interfaces/user";
 import {
   FaEye,
   FaEyeSlash,
-  FaPlus,
+  FaSpinner,
   FaTimes,
   FaUserEdit,
   FaUserSlash,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import DeleteUser from "../delete";
+import { useUser } from "../../../../hooks/useUser";
+import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { FaUserPen } from "react-icons/fa6";
 
 type Props = {
   show: boolean;
@@ -25,6 +29,10 @@ type EditCredentials = {
 };
 
 const UserDetails = ({ show, handleClose, user }: Props) => {
+  const { editUser } = useUser();
+
+  const query = useQueryClient();
+
   const { register, handleSubmit, watch, reset } = useForm<
     IUser & EditCredentials
   >({
@@ -41,12 +49,56 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
     },
   });
 
+  const { mutateAsync, isLoading } = useMutation("editUser", editUser, {
+    onSuccess: (data) =>
+      Promise.all([
+        query.invalidateQueries("users"),
+        handleClose(),
+        toast.success(data),
+        setIsEditing(false),
+      ]),
+  });
+
   const [isShowing, setIsShowing] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  async function onSubmit(data: any) {
-    console.log(data);
+  async function onSubmit(data: IUser & EditCredentials) {
+    const credentials: Record<string, string | boolean> = {};
+
+    if (data.email !== user.email) {
+      credentials["email"] = data.email;
+    }
+
+    if (data.phone !== user.phone) {
+      credentials["phone"] = data.phone;
+    }
+
+    if (data.password) {
+      credentials["password"] = data.password;
+    }
+
+    if (data.confirmPassword) {
+      credentials["confirmPassword"] = data.confirmPassword;
+    }
+
+    if (data.name !== user.name) {
+      credentials["name"] = data.name;
+    }
+
+    if (data.frotas !== user.frotas) {
+      credentials["frotas"] = data.frotas;
+    }
+
+    if (data.admin !== user.admin) {
+      credentials["admin"] = data.admin;
+    }
+
+    if (data.workshop !== user.workshop) {
+      credentials["workshop"] = data.workshop;
+    }
+
+    await mutateAsync({ id: user.id, credentials });
   }
 
   return (
@@ -167,6 +219,7 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
               <input
                 type="checkbox"
                 className="w-4 h-4"
+                disabled={!isEditing}
                 checked={watch("admin")}
                 {...register("admin")}
               />
@@ -176,6 +229,7 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
               <input
                 type="checkbox"
                 className="w-4 h-4"
+                disabled={!isEditing}
                 checked={watch("workshop")}
                 {...register("workshop")}
               />
@@ -185,6 +239,7 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
               <input
                 type="checkbox"
                 className="w-4 h-4"
+                disabled={!isEditing}
                 checked={watch("frotas")}
                 {...register("frotas")}
               />
@@ -194,17 +249,29 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
           {isEditing && (
             <div className="flex items-center justify-center gap-4">
               <button
+                disabled={isLoading}
                 type="button"
                 onClick={() => {
                   reset();
                   setIsEditing(false);
                 }}
-                className="w-1/2 rounded-md p-2 text-white font-semibold text-xl flex justify-center items-center gap-2 bg-size-200 bg-pos-0 hover:bg-pos-100 duration-500 bg-gradient-to-l from-red-600 via-red-400 to-red-800"
+                className="w-1/2 rounded-md disabled:bg-red-400 p-2 text-white font-semibold text-xl flex justify-center items-center gap-2 bg-size-200 bg-pos-0 hover:bg-pos-100 duration-500 bg-gradient-to-l from-red-600 via-red-400 to-red-800"
               >
                 <FaTimes /> Cancelar
               </button>
-              <button className="w-1/2 p-2 text-white font-semibold text-xl flex justify-center items-center gap-2 bg-size-200 bg-pos-0 hover:bg-pos-100 duration-500 bg-gradient-to-l from-blue-600 via-sky-400 to-blue-800 rounded-md">
-                <FaPlus /> Cadastrar
+              <button
+                disabled={isLoading}
+                className="w-1/2 p-2 disabled:bg-blue-600 text-white font-semibold text-xl flex justify-center items-center gap-2 bg-size-200 bg-pos-0 hover:bg-pos-100 duration-500 bg-gradient-to-l from-blue-600 via-sky-400 to-blue-800 rounded-md"
+              >
+                {isLoading ? (
+                  <>
+                    <FaSpinner className="animate-spin" /> Editando
+                  </>
+                ) : (
+                  <>
+                    <FaUserPen /> Editar
+                  </>
+                )}
               </button>
             </div>
           )}

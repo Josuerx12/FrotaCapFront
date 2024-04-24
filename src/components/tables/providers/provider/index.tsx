@@ -1,34 +1,38 @@
 import { FaInfoCircle } from "react-icons/fa";
-import { IUser } from "../../../../interfaces/user";
 import { useState } from "react";
-import UserDetails from "../../../modals/users/details";
+import { IProvider } from "../../../../interfaces/provider";
+import ProviderDetails from "../../../modals/providers/details";
 
-const UserTableRow = ({ user }: { user: IUser }) => {
+const ProviderTableRow = ({ provider }: { provider: IProvider }) => {
   const [isDetailing, setIsDetaling] = useState(false);
 
   return (
     <>
-      <UserDetails
+      <ProviderDetails
         show={isDetailing}
         handleClose={() => setIsDetaling((prev) => !prev)}
-        user={user}
+        provider={provider}
+        key={provider.id}
       />
       <tr className="border">
         <td className="border">
-          <span className="flex justify-center items-center">{user.id}</span>
+          <span className="flex justify-center items-center">
+            {provider.id}
+          </span>
         </td>
         <td className="border">
-          <span className="flex justify-center items-center">{user.name}</span>
+          <span className="flex justify-center items-center">
+            {provider.name}
+          </span>
         </td>
         <td className="border">
-          <span className="flex justify-center items-center">{user.email}</span>
-        </td>
-        <td className="border">
-          <span className="flex justify-center items-center">{user.phone}</span>
+          <span className="flex justify-center items-center">
+            {new Date(provider.createdAt).toLocaleString("pt-BR")}
+          </span>
         </td>
         <td className="border">
           <div
-            title={`Detalhes do usuário: ${user.name}`}
+            title={`Detalhes do usuário: ${provider.name}`}
             className="flex justify-center items-center py-2"
           >
             <button
@@ -44,4 +48,4 @@ const UserTableRow = ({ user }: { user: IUser }) => {
   );
 };
 
-export default UserTableRow;
+export default ProviderTableRow;
