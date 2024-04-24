@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IMaintenceRequest } from "../../../interfaces/maintanceRequest";
 import MaintenceRequestDetails from "../../modals/maintenceRequestDetails";
 
-const NewRequestCard = ({ request }: { request: IMaintenceRequest }) => {
+const WaitingDelivery = ({ request }: { request: IMaintenceRequest }) => {
   const [isDetaling, setIsDetaling] = useState(false);
 
   return (
@@ -35,6 +35,12 @@ const NewRequestCard = ({ request }: { request: IMaintenceRequest }) => {
           {new Date(request.createdAt).toLocaleString("pt-BR")}
         </p>
 
+        <p>
+          <span className="font-bold capitalize">Levar até a oficina:</span>{" "}
+          {request.deadlineToDeviler &&
+            new Date(request.deadlineToDeviler).toLocaleString("pt-BR")}
+        </p>
+
         <div className="capitalize opacity-0 flex  group-hover:opacity-100 duration-200 ease-in-out justify-center p-2 font-bold">
           Ver detalhes
         </div>
@@ -43,4 +49,4 @@ const NewRequestCard = ({ request }: { request: IMaintenceRequest }) => {
   );
 };
 
-export default NewRequestCard;
+export default WaitingDelivery;

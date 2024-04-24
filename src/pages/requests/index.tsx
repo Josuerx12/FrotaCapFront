@@ -3,13 +3,16 @@ import NewRequestFolder from "../../components/folders/newRequest";
 import { useFetch } from "../../hooks/useFetch";
 import { useFilter } from "../../hooks/useFilter";
 import InSchedulingFolder from "../../components/folders/inScheduling";
+import WaitingForDeliveringFolder from "../../components/folders/waintingDelivery";
+import InWorkshopFolder from "../../components/folders/inWorkshop";
 
 const Requests = () => {
   const { fetchAllMaintenceRequests } = useFetch();
 
   const { data, isLoading } = useQuery("allReq", fetchAllMaintenceRequests);
 
-  const { newRequests, schedulingRequests } = useFilter(data);
+  const { newRequests, schedulingRequests, deliverToTheWorkshop } =
+    useFilter(data);
 
   return (
     <div className="pt-24 w-full h-screen">
@@ -25,6 +28,12 @@ const Requests = () => {
             {newRequests && <NewRequestFolder requests={newRequests} />}
             {schedulingRequests && (
               <InSchedulingFolder requests={schedulingRequests} />
+            )}
+            {deliverToTheWorkshop && (
+              <WaitingForDeliveringFolder requests={deliverToTheWorkshop} />
+            )}
+            {deliverToTheWorkshop && (
+              <InWorkshopFolder requests={deliverToTheWorkshop} />
             )}
           </>
         )}
