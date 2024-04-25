@@ -11,7 +11,7 @@ function useFilter(data?: IMaintenceRequest[]) {
     [data]
   );
   const deliverToTheWorkshop = useMemo(
-    () => data?.filter((req) => req.status === 1),
+    () => data?.filter((req) => req.status === 2),
     [data]
   );
 

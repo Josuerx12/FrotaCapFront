@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IMaintenceRequest } from "../../../interfaces/maintanceRequest";
-import MaintenceRequestDetails from "../../modals/maintenceRequestDetails";
+import MaintenceRequestDetails from "../../modals/maintenceRequests/details";
 
 const NewRequestCard = ({ request }: { request: IMaintenceRequest }) => {
   const [isDetaling, setIsDetaling] = useState(false);
