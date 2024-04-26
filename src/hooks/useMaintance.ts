@@ -6,13 +6,16 @@ export type CreateMaintanceCredentials = {
   driverName: string;
   km: number;
   plate: string;
+  service: string;
 };
 
 export type EditMaintanceCredentials = {
   status: number;
+  workshopId?: string;
+  deadlineToDeliver?: string | Date;
 };
 
-export const useMaintance = () => {
+const useMaintance = () => {
   const token = Cookies.get("refreshToken");
 
   async function createMaintance(credentials: CreateMaintanceCredentials) {
@@ -46,3 +49,5 @@ export const useMaintance = () => {
 
   return { createMaintance, editMaintance };
 };
+
+export { useMaintance };

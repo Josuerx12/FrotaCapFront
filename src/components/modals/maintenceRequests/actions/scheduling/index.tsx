@@ -1,12 +1,12 @@
 import {
   FaExclamationTriangle,
-  FaPlus,
+  FaHeadset,
   FaSpinner,
   FaTimes,
 } from "react-icons/fa";
 import { IMaintenceRequest } from "../../../../../interfaces/maintanceRequest";
 import Modal from "../../../modal";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useMaintance } from "../../../../../hooks/useMaintance";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,7 @@ type Props = {
 
 const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
   const { editMaintance } = useMaintance();
+  const query = useQueryClient();
 
   const { isLoading, reset, mutateAsync } = useMutation(
     "confirmScheduling",
@@ -27,6 +28,7 @@ const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
         Promise.all([
           toast.success("Agendamento iniciou com sucesso!"),
           handleClose(),
+          query.invalidateQueries("allReq"),
         ]),
     }
   );
@@ -42,13 +44,13 @@ const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
           <FaExclamationTriangle size={250} className="" />
         </div>
         <p className="text-xl font-bold text-center">
-          Confirmar o inicio do agendamento:
+          Confirmar o inicio do atendimento:
         </p>
         <p className="text-xl mb-4 text-center">
           <span className="font-bold">Solicitação numero: </span> {request.id} |
           <span className="font-bold">Solicitado por: </span>{" "}
-          {request.ownerOfReq.name} |{" "}
-          <span className="font-bold">Veiculo: </span> {request.plate}?
+          {request.Owner.name} | <span className="font-bold">Veiculo: </span>{" "}
+          {request.plate}?
         </p>
       </div>
 
@@ -73,11 +75,11 @@ const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
         >
           {isLoading ? (
             <>
-              <FaSpinner className="animate-spin" /> Cadastrando
+              <FaSpinner className="animate-spin" /> Iniciando atendimento
             </>
           ) : (
             <>
-              <FaPlus /> Cadastrar
+              <FaHeadset /> Iniciar atendimento
             </>
           )}
         </button>

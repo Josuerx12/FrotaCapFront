@@ -5,18 +5,21 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
   FaTimes,
+  FaUserShield,
 } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/useAuth";
-
+import { useAuthWs } from "../../store/useAuthWs";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownAuth, setDropdowAuth] = useState(false);
 
   const navigate = useNavigate();
 
   const pagePath = useLocation();
 
   const { user, logout } = useAuth();
+  const { workshop, logout: logoutWs } = useAuthWs();
 
   return (
     <>
@@ -81,7 +84,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {user && user.workshop && (
+          {workshop && (
             <li
               onClick={() => navigate("/oficina")}
               className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
@@ -93,17 +96,39 @@ const Navbar = () => {
               Oficina
             </li>
           )}
-          {!user && (
+          {!user && !workshop && (
             <li
-              onClick={() => navigate("/login")}
-              className="cursor-pointer flex items-center gap-2 bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+              onClick={() => {
+                setDropdowAuth((prev) => !prev);
+              }}
+              className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 ${
+                dropdownAuth ? "bg-pos-100" : "bg-pos-0"
+              }  bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
             >
-              Login <FaSignInAlt />
+              Autentique-se <FaUserShield size={20} />
+              <div
+                className={`${
+                  dropdownAuth ? "absolute" : "hidden"
+                } flex flex-col top-10 left-0 w-full bg-blue-300 rounded p-2`}
+              >
+                <Link
+                  className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
+                  to="/login"
+                >
+                  Usuário <FaSignInAlt />
+                </Link>
+                <Link
+                  className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
+                  to="/login/ws"
+                >
+                  Oficina <FaSignInAlt />
+                </Link>
+              </div>
             </li>
           )}
-          {user && (
+          {(user || workshop) && (
             <li
-              onClick={logout}
+              onClick={user ? logout : logoutWs}
               className="flex items-center gap-1 cursor-pointer bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-red-600 via-red-300  from-red-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
             >
               Sair <FaSignOutAlt />
@@ -185,12 +210,9 @@ const Navbar = () => {
           </li>
         )}
 
-        {user && user.workshop && (
+        {workshop && (
           <li
-            onClick={() => {
-              navigate("/oficina");
-              setMobileOpen((prev) => !prev);
-            }}
+            onClick={() => navigate("/oficina")}
             className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
               pagePath.pathname === "/oficina"
                 ? "scale-105 text-gray-300"
@@ -200,23 +222,39 @@ const Navbar = () => {
             Oficina
           </li>
         )}
-        {!user && (
+        {!user && !workshop && (
           <li
             onClick={() => {
-              navigate("/login");
-              setMobileOpen((prev) => !prev);
+              setDropdowAuth((prev) => !prev);
             }}
-            className="cursor-pointer flex items-center gap-2 bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
+            className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 ${
+              dropdownAuth ? "bg-pos-100" : "bg-pos-0"
+            }  bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
           >
-            Login <FaSignInAlt />
+            Autentique-se <FaUserShield size={20} />
+            <div
+              className={`${
+                dropdownAuth ? "absolute" : "hidden"
+              } flex flex-col top-10 left-0 w-full bg-blue-300 rounded p-2`}
+            >
+              <Link
+                className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
+                to="/login"
+              >
+                Usuário <FaSignInAlt />
+              </Link>
+              <Link
+                className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
+                to="/login/ws"
+              >
+                Oficina <FaSignInAlt />
+              </Link>
+            </div>
           </li>
         )}
-        {user && (
+        {(user || workshop) && (
           <li
-            onClick={() => {
-              logout();
-              setMobileOpen((prev) => !prev);
-            }}
+            onClick={user ? logout : logoutWs}
             className="flex items-center gap-1 cursor-pointer bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-red-600 via-red-300  from-red-600 bg-pos-0 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider"
           >
             Sair <FaSignOutAlt />

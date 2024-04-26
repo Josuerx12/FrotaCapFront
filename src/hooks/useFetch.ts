@@ -47,6 +47,15 @@ function useFetch() {
     }
   }
 
+  async function fetchWorkshops(): Promise<IUser[]> {
+    try {
+      const res = (await api(token).get("/workshop")).data.workshops;
+      return res;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  }
+
   async function fetchVehicles(): Promise<IVehicle[]> {
     try {
       const res = (await api(token).get("/vehicle")).data.vehicles;
@@ -72,6 +81,7 @@ function useFetch() {
     fetchUsers,
     fetchVehicles,
     fetchProviders,
+    fetchWorkshops,
   };
 }
 

@@ -99,6 +99,16 @@ const CreateMaintanceRequestModal = ({ show, handleClose }: Props) => {
           {error && error.vehicle && <ErrorLabel>{error.vehicle}</ErrorLabel>}
         </label>
 
+        <label className="flex flex-col gap-1">
+          <span>Serviço a ser realizado</span>
+          <textarea
+            className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
+            rows={5}
+            placeholder="Insira aqui o serviço desejado com seus detalhes!"
+            {...register("service")}
+          />
+        </label>
+
         {error && error.message && <ErrorLabel>{error.message[0]}</ErrorLabel>}
 
         <div className="flex items-center justify-center gap-4">

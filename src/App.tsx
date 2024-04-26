@@ -9,15 +9,22 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useAuth } from "./store/useAuth";
 import Admin from "./pages/admin";
+import { useAuthWs } from "./store/useAuthWs";
+import LoginWs from "./pages/loginWs";
 
 const App = () => {
   const { getUser, user } = useAuth();
+  const { getWs, workshop } = useAuthWs();
 
-  const token = Cookies.get("refreshToken");
+  const userToken = Cookies.get("refreshToken");
+  const workshopToken = Cookies.get("workshopToken");
 
   useEffect(() => {
     getUser();
-  }, [token]);
+  }, [userToken]);
+  useEffect(() => {
+    getWs();
+  }, [workshopToken]);
 
   return (
     <main className="flex justify-between flex-col">
@@ -26,15 +33,39 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route
           path="/solicitacoes"
-          element={user ? <Requests /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <Requests />
+            ) : workshop ? (
+              <Navigate to="/oficina" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/gestao"
-          element={user && user.admin ? <Admin /> : <Navigate to="/login" />}
+          element={
+            user && user.admin ? <Admin /> : <Navigate to="/solicitacoes" />
+          }
         />
         <Route
           path="/login"
-          element={user ? <Navigate to="/solicitacoes" /> : <Login />}
+          element={
+            user ? (
+              <Navigate to="/solicitacoes" />
+            ) : workshop ? (
+              <Navigate to="/oficina" />
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/login/ws"
+          element={
+            user || workshop ? <Navigate to="/solicitacoes" /> : <LoginWs />
+          }
         />
       </Routes>
       <ToastContainer

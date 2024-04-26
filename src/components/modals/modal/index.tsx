@@ -26,10 +26,10 @@ const Modal = ({
           hidden();
         }
       }}
-      className="bg-[#6b6b6b91] z-10 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none"
+      className="bg-[#6b6b6b91] z-50 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none"
     >
       <div
-        className="bg-white absolute top-28 mx-2 md:mt-0  max-w-screen-lg w-11/12 rounded drop-shadow-lg"
+        className="bg-white absolute inset-y-10 h-fit  max-w-screen-lg w-11/12 rounded drop-shadow-lg"
         onClick={(e) => {
           e.stopPropagation();
         }}

@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { api } from "../config/api";
 import Cookies from "js-cookie";
-import { IUser } from "../interfaces/user";
+import { IWorkshop } from "../interfaces/workShop";
 
 export type AuthCredentials = {
   email: string;
@@ -10,49 +10,49 @@ export type AuthCredentials = {
 };
 
 type State = {
-  user?: IUser;
+  workshop?: IWorkshop;
 };
 
 type Actions = {
   login: (credentials: AuthCredentials) => Promise<string>;
-  getUser: () => Promise<string>;
+  getWs: () => Promise<string>;
   logout: () => void;
 };
 
-const useAuth = create<State & Actions>((set) => ({
-  user: undefined,
+const useAuthWs = create<State & Actions>((set) => ({
+  workshop: undefined,
   login: async (credentials: AuthCredentials) => {
     try {
-      const res = await api().post("/auth/login", credentials);
+      const res = await api().post("/auth/login/ws", credentials);
 
       const token = res.data.token;
 
-      Cookies.set("refreshToken", token);
+      Cookies.set("workshopToken", token);
 
       return "Login realizado com sucesso!";
     } catch (error: any) {
       throw error.response.data;
     }
   },
-  getUser: async () => {
-    const token = Cookies.get("refreshToken");
+  getWs: async () => {
+    const token = Cookies.get("workshopToken");
 
     try {
       const res = await (
-        await api(token).get("/user/profile/detail")
-      ).data.user;
+        await api(token).get("/workshop/detail")
+      ).data.workshop;
 
-      set(() => ({ user: res }));
+      set(() => ({ workshop: res }));
 
-      return "Dados do usuário coletado com sucesso!";
+      return "Dados da oficina coletado com sucesso!";
     } catch (error: any) {
       throw error.response.data;
     }
   },
   logout: () => {
-    Cookies.remove("refreshToken");
-    set(() => ({ user: undefined }));
+    Cookies.remove("workshopToken");
+    set(() => ({ workshop: undefined }));
   },
 }));
 
-export { useAuth };
+export { useAuthWs };
