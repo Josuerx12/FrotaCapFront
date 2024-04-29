@@ -14,8 +14,22 @@ function useFilter(data?: IMaintenceRequest[]) {
     () => data?.filter((req) => req.status === 2),
     [data]
   );
+  const waitingDelivery = useMemo(
+    () => data?.filter((req) => req.status === 3),
+    [data]
+  );
+  const waitingMaintence = useMemo(
+    () => data?.filter((req) => req.status === 4),
+    [data]
+  );
 
-  return { newRequests, schedulingRequests, deliverToTheWorkshop };
+  return {
+    newRequests,
+    schedulingRequests,
+    deliverToTheWorkshop,
+    waitingDelivery,
+    waitingMaintence,
+  };
 }
 
 export { useFilter };

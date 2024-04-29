@@ -8,7 +8,7 @@ const WaitingForDeliveringFolder = ({
   requests: IMaintenceRequest[];
 }) => {
   return (
-    <Folder folderName="Esperando entrega do veiculo">
+    <Folder folderName="Aguardando envio">
       {requests.length > 0 ? (
         requests.map((req) => <WaitingDelivery request={req} key={req.id} />)
       ) : (

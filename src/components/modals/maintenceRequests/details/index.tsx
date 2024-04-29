@@ -4,6 +4,10 @@ import Modal from "../../modal";
 import { useState } from "react";
 import SchedulingConfirmationModal from "../actions/scheduling";
 import FinishScheduleModal from "../actions/finishSchedule";
+import { useAuth } from "../../../../store/useAuth";
+import { useAuthWs } from "../../../../store/useAuthWs";
+import { FaCarOn } from "react-icons/fa6";
+import ReciveVehicleModal from "../actions/recieveVehicle";
 
 type Props = {
   show: boolean;
@@ -14,12 +18,22 @@ type Props = {
 const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
   const [isScheduling, setIsScheduling] = useState(false);
   const [isFinishSchedule, setIsFinishScheduling] = useState(false);
+  const [isRecivingVehicle, setIsRecivingVehicle] = useState(false);
+
+  const { user } = useAuth();
+  const { workshop } = useAuthWs();
+
   return (
     <>
       <SchedulingConfirmationModal
         request={request}
         show={isScheduling}
         handleClose={() => setIsScheduling((prev) => !prev)}
+      />
+      <ReciveVehicleModal
+        show={isRecivingVehicle}
+        handleClose={() => setIsRecivingVehicle((prev) => !prev)}
+        request={request}
       />
       <FinishScheduleModal
         show={isFinishSchedule}
@@ -145,7 +159,7 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
             </label>
           </div>
           <div className="flex w-full justify-end mt-4">
-            {request.status === 0 && (
+            {request.status === 0 && user?.frotas && (
               <button
                 className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-blue-500 hover:bg-blue-600 duration-200"
                 onClick={() => {
@@ -156,7 +170,7 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
                 <FaCalendarPlus /> Iniciar agendamento
               </button>
             )}
-            {request.status === 1 && (
+            {request.status === 1 && user?.frotas && (
               <button
                 className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
                 onClick={() => {
@@ -165,6 +179,18 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
                 }}
               >
                 <FaCalendarCheck /> Finalizar agendamento
+              </button>
+            )}
+            {request.status === 2 && workshop && (
+              <button
+                className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
+                onClick={() => {
+                  setIsRecivingVehicle((prev) => !prev);
+                  handleClose();
+                }}
+              >
+                <FaCarOn size={25} />
+                Receber veiculo
               </button>
             )}
           </div>

@@ -17,6 +17,7 @@ export type EditMaintanceCredentials = {
 
 const useMaintance = () => {
   const token = Cookies.get("refreshToken");
+  const wsToken = Cookies.get("workshopToken");
 
   async function createMaintance(credentials: CreateMaintanceCredentials) {
     try {
@@ -35,10 +36,22 @@ const useMaintance = () => {
     id: number;
     credentials: EditMaintanceCredentials;
   }): Promise<string> {
+    const formData = new FormData();
+
+    if (credentials.status) {
+      formData.append("status", String(credentials.status));
+    }
+    if (credentials.deadlineToDeliver) {
+      formData.append("status", String(credentials.deadlineToDeliver));
+    }
+    if (credentials.workshopId) {
+      formData.append("status", String(credentials.workshopId));
+    }
+
     try {
-      const res = await api(token).patch(
+      const res = await api(token ? token : wsToken).patch(
         "/maintance-request/" + id,
-        credentials
+        formData
       );
 
       return res.data;

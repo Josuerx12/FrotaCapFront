@@ -11,6 +11,7 @@ import { useAuth } from "./store/useAuth";
 import Admin from "./pages/admin";
 import { useAuthWs } from "./store/useAuthWs";
 import LoginWs from "./pages/loginWs";
+import Workshop from "./pages/workshop";
 
 const App = () => {
   const { getUser, user } = useAuth();
@@ -48,6 +49,10 @@ const App = () => {
           element={
             user && user.admin ? <Admin /> : <Navigate to="/solicitacoes" />
           }
+        />
+        <Route
+          path="/oficina"
+          element={workshop ? <Workshop /> : <Navigate to="/solicitacoes" />}
         />
         <Route
           path="/login"

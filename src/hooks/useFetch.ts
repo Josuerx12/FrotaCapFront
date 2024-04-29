@@ -9,6 +9,8 @@ import { IProvider } from "../interfaces/provider";
 
 function useFetch() {
   const token = Cookies.get("refreshToken");
+  const wsToken = Cookies.get("workshopToken");
+
   async function fetchAllMaintenceRequests(): Promise<IMaintenceRequest[]> {
     try {
       const res = (await api(token).get("/maintance-request")).data.requests;
@@ -30,7 +32,7 @@ function useFetch() {
     IMaintenceRequest[]
   > {
     try {
-      const res = (await api(token).get("/maintance-request/workshop")).data
+      const res = (await api(wsToken).get("/maintance-request/ws")).data
         .requests;
       return res;
     } catch (error: any) {

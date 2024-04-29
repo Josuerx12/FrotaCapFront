@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { AuthCredentials, useAuth } from "../../store/useAuth";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { useState } from "react";
 import ErrorLabel from "../../components/errorLabel";
 
@@ -44,8 +44,8 @@ const Login = () => {
 
   return (
     <section className="w-full h-full  min-h-screen flex flex-col justify-center items-center">
-      <h3 className="text-3xl font-bold text-neutral-800 py-3">
-        Autentique-se
+      <h3 className="text-3xl font-bold text-neutral-800 py-3 flex items-center gap-2">
+        Autentique-se - Usuário <FaUser />
       </h3>
       <form
         className="max-w-screen-md w-11/12  bg-gradient-to-br from-sky-600 to-sky-500 p-6 flex flex-col gap-6 rounded-lg"

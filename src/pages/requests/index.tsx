@@ -3,7 +3,7 @@ import NewRequestFolder from "../../components/folders/newRequest";
 import { useFetch } from "../../hooks/useFetch";
 import { useFilter } from "../../hooks/useFilter";
 import InSchedulingFolder from "../../components/folders/inScheduling";
-import WaitingForDeliveringFolder from "../../components/folders/waintingDelivery";
+import WaitingForDeliveringFolder from "../../components/folders/waitingDelivery";
 import InWorkshopFolder from "../../components/folders/inWorkshop";
 import { FaFilter, FaPlus } from "react-icons/fa";
 import { FaArrowsRotate } from "react-icons/fa6";
