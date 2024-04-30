@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   CreateMaintanceCredentials,
   useMaintance,
-} from "../../../../hooks/useMaintance";
+} from "../../../../hooks/useMaintanance";
 import { toast } from "react-toastify";
 import ErrorLabel from "../../../errorLabel";
 import { useFetch } from "../../../../hooks/useFetch";

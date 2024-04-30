@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IMaintenceRequest } from "../../../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
 import MaintenceRequestDetails from "../../modals/maintenceRequests/details";
 
 const InSchedulingRequestCard = ({

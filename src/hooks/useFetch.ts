@@ -2,7 +2,7 @@
 /* eslint-disable no-useless-catch */
 import Cookies from "js-cookie";
 import { api } from "../config/api";
-import { IMaintenceRequest } from "../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../interfaces/maintenanceRequest";
 import { IUser } from "../interfaces/user";
 import { IVehicle } from "../interfaces/vehicle";
 import { IProvider } from "../interfaces/provider";

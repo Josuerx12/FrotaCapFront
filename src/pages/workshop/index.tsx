@@ -2,6 +2,10 @@ import { FaArrowsRotate, FaFilter } from "react-icons/fa6";
 import { useQuery, useQueryClient } from "react-query";
 import WaitingForDeliveringFolder from "../../components/folders/waitingDelivery";
 import { useFetch } from "../../hooks/useFetch";
+import { useFilter } from "../../hooks/useFilter";
+import WaitingBudget from "../../components/folders/waitingBudget";
+import WaitingMaintenanceFolder from "../../components/folders/waitingMaintenance";
+import InMaintenanceFolder from "../../components/folders/inMaintenance";
 
 const Workshop = () => {
   const query = useQueryClient();
@@ -9,6 +13,13 @@ const Workshop = () => {
   const { fetchWorkShopMaintenceRequests } = useFetch();
 
   const { data, isLoading } = useQuery("wsReq", fetchWorkShopMaintenceRequests);
+
+  const {
+    deliverToTheWorkshop,
+    waitingBudget,
+    waitingMaintenance,
+    inMaintenance,
+  } = useFilter(data);
 
   return (
     <>
@@ -35,7 +46,18 @@ const Workshop = () => {
           {isLoading ? (
             <p>Carregando...</p>
           ) : (
-            <>{data && <WaitingForDeliveringFolder requests={data} />}</>
+            <>
+              {deliverToTheWorkshop && (
+                <WaitingForDeliveringFolder requests={deliverToTheWorkshop} />
+              )}
+              {waitingBudget && <WaitingBudget requests={waitingBudget} />}
+              {waitingMaintenance && (
+                <WaitingMaintenanceFolder requests={waitingMaintenance} />
+              )}
+              {inMaintenance && (
+                <InMaintenanceFolder requests={inMaintenance} />
+              )}
+            </>
           )}
         </div>
       </div>

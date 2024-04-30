@@ -5,10 +5,10 @@ import {
   FaTimes,
   FaTools,
 } from "react-icons/fa";
-import { IMaintenceRequest } from "../../../../../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQueryClient } from "react-query";
-import { useMaintance } from "../../../../../hooks/useMaintance";
+import { useMaintance } from "../../../../../hooks/useMaintanance";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -40,7 +40,7 @@ const ReciveVehicleModal = ({ show, handleClose, request }: Props) => {
     >
       <div>
         <div className="text-yellow-400 w-fit  mx-auto m-4 ">
-          <FaExclamationTriangle size={250} className="" />
+          <FaExclamationTriangle size={250} />
         </div>
         <p className="text-xl font-bold text-center">Confirmar recebimento:</p>
         <p className="text-xl mb-4 text-center">

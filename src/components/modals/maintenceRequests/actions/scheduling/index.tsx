@@ -4,10 +4,10 @@ import {
   FaSpinner,
   FaTimes,
 } from "react-icons/fa";
-import { IMaintenceRequest } from "../../../../../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQueryClient } from "react-query";
-import { useMaintance } from "../../../../../hooks/useMaintance";
+import { useMaintance } from "../../../../../hooks/useMaintanance";
 import { toast } from "react-toastify";
 
 type Props = {

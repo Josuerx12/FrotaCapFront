@@ -1,4 +1,4 @@
-import { IMaintenceRequest } from "./maintanceRequest";
+import { IMaintenceRequest } from "./maintenanceRequest";
 
 export interface IWorkshop {
   id: number;

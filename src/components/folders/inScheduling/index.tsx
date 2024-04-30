@@ -1,4 +1,4 @@
-import { IMaintenceRequest } from "../../../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
 import InSchedulingRequestCard from "../../cards/inSchedulingRequest";
 import { Folder } from "../folder";
 

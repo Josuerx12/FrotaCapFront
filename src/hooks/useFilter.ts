@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { IMaintenceRequest } from "../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../interfaces/maintenanceRequest";
 
 function useFilter(data?: IMaintenceRequest[]) {
   const newRequests = useMemo(
@@ -14,12 +14,16 @@ function useFilter(data?: IMaintenceRequest[]) {
     () => data?.filter((req) => req.status === 2),
     [data]
   );
-  const waitingDelivery = useMemo(
+  const waitingBudget = useMemo(
     () => data?.filter((req) => req.status === 3),
     [data]
   );
-  const waitingMaintence = useMemo(
+  const waitingMaintenance = useMemo(
     () => data?.filter((req) => req.status === 4),
+    [data]
+  );
+  const inMaintenance = useMemo(
+    () => data?.filter((req) => req.status === 5),
     [data]
   );
 
@@ -27,8 +31,9 @@ function useFilter(data?: IMaintenceRequest[]) {
     newRequests,
     schedulingRequests,
     deliverToTheWorkshop,
-    waitingDelivery,
-    waitingMaintence,
+    waitingBudget,
+    waitingMaintenance,
+    inMaintenance,
   };
 }
 

@@ -4,11 +4,13 @@ import { useFetch } from "../../hooks/useFetch";
 import { useFilter } from "../../hooks/useFilter";
 import InSchedulingFolder from "../../components/folders/inScheduling";
 import WaitingForDeliveringFolder from "../../components/folders/waitingDelivery";
-import InWorkshopFolder from "../../components/folders/inWorkshop";
 import { FaFilter, FaPlus } from "react-icons/fa";
 import { FaArrowsRotate } from "react-icons/fa6";
 import CreateMaintanceRequestModal from "../../components/modals/maintenceRequests/create";
 import { useState } from "react";
+import WaitingBudget from "../../components/folders/waitingBudget";
+import WaitingMaintenanceFolder from "../../components/folders/waitingMaintenance";
+import InMaintenanceFolder from "../../components/folders/inMaintenance";
 
 const Requests = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -19,8 +21,14 @@ const Requests = () => {
 
   const { data, isLoading } = useQuery("allReq", fetchAllMaintenceRequests);
 
-  const { newRequests, schedulingRequests, deliverToTheWorkshop } =
-    useFilter(data);
+  const {
+    newRequests,
+    schedulingRequests,
+    deliverToTheWorkshop,
+    waitingBudget,
+    waitingMaintenance,
+    inMaintenance,
+  } = useFilter(data);
 
   return (
     <>
@@ -66,8 +74,12 @@ const Requests = () => {
               {deliverToTheWorkshop && (
                 <WaitingForDeliveringFolder requests={deliverToTheWorkshop} />
               )}
-              {deliverToTheWorkshop && (
-                <InWorkshopFolder requests={deliverToTheWorkshop} />
+              {waitingBudget && <WaitingBudget requests={waitingBudget} />}
+              {waitingMaintenance && (
+                <WaitingMaintenanceFolder requests={waitingMaintenance} />
+              )}{" "}
+              {inMaintenance && (
+                <InMaintenanceFolder requests={inMaintenance} />
               )}
             </>
           )}

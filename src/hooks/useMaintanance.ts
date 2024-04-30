@@ -11,8 +11,10 @@ export type CreateMaintanceCredentials = {
 
 export type EditMaintanceCredentials = {
   status: number;
-  workshopId?: string;
+  workShopId?: number;
   deadlineToDeliver?: string | Date;
+  deadlineToForward?: string | Date;
+  budget: FileList;
 };
 
 const useMaintance = () => {
@@ -38,14 +40,26 @@ const useMaintance = () => {
   }): Promise<string> {
     const formData = new FormData();
 
+    if (credentials.budget) {
+      formData.append("budget", credentials.budget[0]);
+    }
     if (credentials.status) {
       formData.append("status", String(credentials.status));
     }
-    if (credentials.deadlineToDeliver) {
-      formData.append("status", String(credentials.deadlineToDeliver));
+    if (credentials.deadlineToForward) {
+      formData.append(
+        "deadlineToForward",
+        String(credentials.deadlineToForward)
+      );
     }
-    if (credentials.workshopId) {
-      formData.append("status", String(credentials.workshopId));
+    if (credentials.deadlineToDeliver) {
+      formData.append(
+        "deadlineToDeliver",
+        String(credentials.deadlineToDeliver)
+      );
+    }
+    if (credentials.workShopId) {
+      formData.append("workShopId", String(credentials.workShopId));
     }
 
     try {

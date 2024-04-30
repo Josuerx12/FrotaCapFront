@@ -2,13 +2,13 @@ import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
 import WaitingDelivery from "../../cards/waitingDelivery";
 import { Folder } from "../folder";
 
-const WaitingForDeliveringFolder = ({
+const WaitingBudgetFolder = ({
   requests,
 }: {
   requests: IMaintenceRequest[];
 }) => {
   return (
-    <Folder folderName="Aguardando envio">
+    <Folder folderName="Aguardando Orçamento">
       {requests.length > 0 ? (
         requests.map((req) => <WaitingDelivery request={req} key={req.id} />)
       ) : (
@@ -20,4 +20,4 @@ const WaitingForDeliveringFolder = ({
   );
 };
 
-export default WaitingForDeliveringFolder;
+export default WaitingBudgetFolder;

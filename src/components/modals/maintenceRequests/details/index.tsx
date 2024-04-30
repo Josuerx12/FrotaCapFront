@@ -1,5 +1,10 @@
-import { FaCalendarCheck, FaCalendarPlus } from "react-icons/fa";
-import { IMaintenceRequest } from "../../../../interfaces/maintanceRequest";
+import {
+  FaCalendarCheck,
+  FaCalendarPlus,
+  FaFileArchive,
+  FaTools,
+} from "react-icons/fa";
+import { IMaintenceRequest } from "../../../../interfaces/maintenanceRequest";
 import Modal from "../../modal";
 import { useState } from "react";
 import SchedulingConfirmationModal from "../actions/scheduling";
@@ -8,6 +13,8 @@ import { useAuth } from "../../../../store/useAuth";
 import { useAuthWs } from "../../../../store/useAuthWs";
 import { FaCarOn } from "react-icons/fa6";
 import ReciveVehicleModal from "../actions/recieveVehicle";
+import SendBudgetModal from "../actions/sendBudget";
+import StartMaintenanceModal from "../actions/startMaintenance";
 
 type Props = {
   show: boolean;
@@ -19,12 +26,24 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
   const [isScheduling, setIsScheduling] = useState(false);
   const [isFinishSchedule, setIsFinishScheduling] = useState(false);
   const [isRecivingVehicle, setIsRecivingVehicle] = useState(false);
+  const [isSendingBudget, setIsSendingBudget] = useState(false);
+  const [isStartingMaintenance, setIsStartingMaintenance] = useState(false);
 
   const { user } = useAuth();
   const { workshop } = useAuthWs();
 
   return (
     <>
+      <SendBudgetModal
+        handleClose={() => setIsSendingBudget((prev) => !prev)}
+        show={isSendingBudget}
+        request={request}
+      />
+      <StartMaintenanceModal
+        handleClose={() => setIsStartingMaintenance((prev) => !prev)}
+        show={isStartingMaintenance}
+        request={request}
+      />
       <SchedulingConfirmationModal
         request={request}
         show={isScheduling}
@@ -191,6 +210,42 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
               >
                 <FaCarOn size={25} />
                 Receber veiculo
+              </button>
+            )}
+            {request.status === 3 && workshop && (
+              <button
+                className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
+                onClick={() => {
+                  setIsSendingBudget((prev) => !prev);
+                  handleClose();
+                }}
+              >
+                <FaFileArchive size={25} />
+                Anexar Orçamento
+              </button>
+            )}
+            {request.status === 4 && workshop && (
+              <button
+                className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
+                onClick={() => {
+                  setIsStartingMaintenance((prev) => !prev);
+                  handleClose();
+                }}
+              >
+                <FaTools size={25} />
+                Iniciar Manutenção
+              </button>
+            )}
+            {request.status === 5 && workshop && (
+              <button
+                className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
+                onClick={() => {
+                  setIsStartingMaintenance((prev) => !prev);
+                  handleClose();
+                }}
+              >
+                <FaTools size={25} />
+                Finalizar Manutenção
               </button>
             )}
           </div>

@@ -1,8 +1,8 @@
 import { FaCalendarCheck, FaSpinner, FaTimes } from "react-icons/fa";
-import { IMaintenceRequest } from "../../../../../interfaces/maintanceRequest";
+import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useMaintance } from "../../../../../hooks/useMaintance";
+import { useMaintance } from "../../../../../hooks/useMaintanance";
 import { toast } from "react-toastify";
 import { useFetch } from "../../../../../hooks/useFetch";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,11 @@ type FinishScheduleCredentials = {
 
 const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
   const { editMaintance } = useMaintance();
-  const { handleSubmit, register } = useForm<FinishScheduleCredentials>({
+  const {
+    handleSubmit,
+    register,
+    reset: resetForm,
+  } = useForm<FinishScheduleCredentials>({
     defaultValues: {
       status: 2,
     },
@@ -37,6 +41,7 @@ const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
           toast.success("Agendamento Finalizado!"),
           handleClose(),
           query.invalidateQueries("allReq"),
+          resetForm(),
         ]),
     }
   );
@@ -102,6 +107,7 @@ const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
             disabled={isLoading}
             onClick={() => {
               reset();
+              resetForm();
               handleClose();
             }}
             className="w-1/2 flex disabled:bg-red-400 justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-rose-400 via-red-500 to-red-700"
