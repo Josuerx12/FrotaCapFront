@@ -77,7 +77,7 @@ const Requests = () => {
               {waitingBudget && <WaitingBudget requests={waitingBudget} />}
               {waitingMaintenance && (
                 <WaitingMaintenanceFolder requests={waitingMaintenance} />
-              )}{" "}
+              )}
               {inMaintenance && (
                 <InMaintenanceFolder requests={inMaintenance} />
               )}

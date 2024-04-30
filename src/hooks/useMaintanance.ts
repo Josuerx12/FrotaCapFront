@@ -14,7 +14,7 @@ export type EditMaintanceCredentials = {
   workShopId?: number;
   deadlineToDeliver?: string | Date;
   deadlineToForward?: string | Date;
-  budget: FileList;
+  budget?: FileList;
 };
 
 const useMaintance = () => {

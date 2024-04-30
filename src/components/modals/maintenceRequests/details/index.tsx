@@ -15,6 +15,7 @@ import { FaCarOn } from "react-icons/fa6";
 import ReciveVehicleModal from "../actions/recieveVehicle";
 import SendBudgetModal from "../actions/sendBudget";
 import StartMaintenanceModal from "../actions/startMaintenance";
+import FinishMaintenanceModal from "../actions/finishMaintenance";
 
 type Props = {
   show: boolean;
@@ -28,6 +29,7 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
   const [isRecivingVehicle, setIsRecivingVehicle] = useState(false);
   const [isSendingBudget, setIsSendingBudget] = useState(false);
   const [isStartingMaintenance, setIsStartingMaintenance] = useState(false);
+  const [isFinishingMaintenance, setIsFinishingMaintenance] = useState(false);
 
   const { user } = useAuth();
   const { workshop } = useAuthWs();
@@ -57,6 +59,11 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
       <FinishScheduleModal
         show={isFinishSchedule}
         handleClose={() => setIsFinishScheduling((prev) => !prev)}
+        request={request}
+      />
+      <FinishMaintenanceModal
+        show={isFinishingMaintenance}
+        handleClose={() => setIsFinishingMaintenance((prev) => !prev)}
         request={request}
       />
       <Modal
@@ -240,7 +247,7 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
               <button
                 className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
                 onClick={() => {
-                  setIsStartingMaintenance((prev) => !prev);
+                  setIsFinishingMaintenance((prev) => !prev);
                   handleClose();
                 }}
               >
