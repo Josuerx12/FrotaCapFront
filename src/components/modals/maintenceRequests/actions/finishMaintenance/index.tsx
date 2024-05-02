@@ -26,7 +26,7 @@ const FinishMaintenanceModal = ({ show, handleClose, request }: Props) => {
     {
       onSuccess: () =>
         Promise.all([
-          toast.success("Recebido na oficina com sucesso!"),
+          toast.success("Manutenção finalizada com sucesso!!"),
           handleClose(),
           query.invalidateQueries("wsReq"),
         ]),

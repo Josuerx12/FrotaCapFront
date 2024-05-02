@@ -15,6 +15,7 @@ export type EditMaintanceCredentials = {
   deadlineToDeliver?: string | Date;
   deadlineToForward?: string | Date;
   budget?: FileList;
+  checkoutBy?: string;
 };
 
 const useMaintance = () => {
@@ -60,6 +61,9 @@ const useMaintance = () => {
     }
     if (credentials.workShopId) {
       formData.append("workShopId", String(credentials.workShopId));
+    }
+    if (credentials.checkoutBy) {
+      formData.append("checkoutBy", String(credentials.checkoutBy));
     }
 
     try {

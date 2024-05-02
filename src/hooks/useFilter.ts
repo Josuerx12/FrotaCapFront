@@ -26,6 +26,14 @@ function useFilter(data?: IMaintenceRequest[]) {
     () => data?.filter((req) => req.status === 5),
     [data]
   );
+  const waitingToCollect = useMemo(
+    () => data?.filter((req) => req.status === 6),
+    [data]
+  );
+  const collected = useMemo(
+    () => data?.filter((req) => req.status === 7),
+    [data]
+  );
 
   return {
     newRequests,
@@ -34,6 +42,8 @@ function useFilter(data?: IMaintenceRequest[]) {
     waitingBudget,
     waitingMaintenance,
     inMaintenance,
+    waitingToCollect,
+    collected,
   };
 }
 

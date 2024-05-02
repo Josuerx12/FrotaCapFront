@@ -5,7 +5,7 @@ const api = (token?: string) => {
 
   if (token) {
     return (connection = axios.create({
-      baseURL: "https://frota-cap.vercel.app/",
+      baseURL: "https://api.josuecarvalho.cloud/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -13,7 +13,7 @@ const api = (token?: string) => {
   }
 
   connection = axios.create({
-    baseURL: "https://frota-cap.vercel.app/",
+    baseURL: "https://api.josuecarvalho.cloud/",
   });
 
   return connection;

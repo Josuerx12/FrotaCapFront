@@ -6,6 +6,8 @@ import { useFilter } from "../../hooks/useFilter";
 import WaitingBudget from "../../components/folders/waitingBudget";
 import WaitingMaintenanceFolder from "../../components/folders/waitingMaintenance";
 import InMaintenanceFolder from "../../components/folders/inMaintenance";
+import WaitingToCollectFolder from "../../components/folders/waitingToCollect";
+import CollectedFolder from "../../components/folders/Collected";
 
 const Workshop = () => {
   const query = useQueryClient();
@@ -19,6 +21,8 @@ const Workshop = () => {
     waitingBudget,
     waitingMaintenance,
     inMaintenance,
+    waitingToCollect,
+    collected,
   } = useFilter(data);
 
   return (
@@ -57,6 +61,10 @@ const Workshop = () => {
               {inMaintenance && (
                 <InMaintenanceFolder requests={inMaintenance} />
               )}
+              {waitingToCollect && (
+                <WaitingToCollectFolder requests={waitingToCollect} />
+              )}
+              {collected && <CollectedFolder requests={collected} />}
             </>
           )}
         </div>

@@ -38,9 +38,9 @@ const Navbar = () => {
         <ul className="hidden text-white text-lg md:flex items-center gap-3">
           <li
             onClick={() => navigate("/")}
-            className={`cursor-pointer capitalize relative hover:text-gray-300 ease-linear  tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            className={`cursor-pointer capitalize relative hover:text-gray-300 ease-linear  tracking-wider duration-200 hover:scale-110 ${
               pagePath.pathname === "/"
-                ? "scale-105 text-gray-300"
+                ? "scale-110 text-gray-300"
                 : "scale-100 text-white"
             }`}
           >
@@ -49,9 +49,9 @@ const Navbar = () => {
           {user && (
             <li
               onClick={() => navigate("/solicitacoes")}
-              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
                 pagePath.pathname === "/solicitacoes"
-                  ? "scale-105 text-gray-300"
+                  ? "scale-110 text-gray-300"
                   : "scale-100 text-white"
               }`}
             >
@@ -61,9 +61,9 @@ const Navbar = () => {
           {user && user.admin && (
             <li
               onClick={() => navigate("/gestao")}
-              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
                 pagePath.pathname === "/gestao"
-                  ? "scale-105 text-gray-300"
+                  ? "scale-110 text-gray-300"
                   : "scale-100 text-white"
               }`}
             >
@@ -74,9 +74,9 @@ const Navbar = () => {
           {user && user.frotas && (
             <li
               onClick={() => navigate("/frotas")}
-              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
                 pagePath.pathname === "/frotas"
-                  ? "scale-105 text-gray-300"
+                  ? "scale-110 text-gray-300"
                   : "scale-100 text-white"
               }`}
             >
@@ -87,9 +87,9 @@ const Navbar = () => {
           {workshop && (
             <li
               onClick={() => navigate("/oficina")}
-              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+              className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
                 pagePath.pathname === "/oficina"
-                  ? "scale-105 text-gray-300"
+                  ? "scale-110 text-gray-300"
                   : "scale-100 text-white"
               }`}
             >
@@ -155,9 +155,9 @@ const Navbar = () => {
             navigate("/");
             setMobileOpen((prev) => !prev);
           }}
-          className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+          className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
             pagePath.pathname === "/"
-              ? "scale-105 text-gray-300"
+              ? "scale-110 text-gray-300"
               : "scale-100 text-white"
           }`}
         >
@@ -169,9 +169,9 @@ const Navbar = () => {
               navigate("/solicitacoes");
               setMobileOpen((prev) => !prev);
             }}
-            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
               pagePath.pathname === "/solicitacoes"
-                ? "scale-105 text-gray-300"
+                ? "scale-110 text-gray-300"
                 : "scale-100 text-white"
             }`}
           >
@@ -184,9 +184,9 @@ const Navbar = () => {
               navigate("/gestao");
               setMobileOpen((prev) => !prev);
             }}
-            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
               pagePath.pathname === "/gestao"
-                ? "scale-105 text-gray-300"
+                ? "scale-110 text-gray-300"
                 : "scale-100 text-white"
             }`}
           >
@@ -200,9 +200,9 @@ const Navbar = () => {
               navigate("/frotas");
               setMobileOpen((prev) => !prev);
             }}
-            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
               pagePath.pathname === "/frotas"
-                ? "scale-105 text-gray-300"
+                ? "scale-110 text-gray-300"
                 : "scale-100 text-white"
             }`}
           >
@@ -213,9 +213,9 @@ const Navbar = () => {
         {workshop && (
           <li
             onClick={() => navigate("/oficina")}
-            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider before:absolute before:w-0 before:h-[1px] before:bg-white hover:before:w-full before:bottom-0 before:transition-all before:duration-200 before:ease-linear ${
+            className={`cursor-pointer capitalize relative hover:text-gray-300   tracking-wider duration-200 hover:scale-110 ${
               pagePath.pathname === "/oficina"
-                ? "scale-105 text-gray-300"
+                ? "scale-110 text-gray-300"
                 : "scale-100 text-white"
             }`}
           >

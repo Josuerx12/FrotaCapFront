@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  FaExclamationTriangle,
-  FaSpinner,
-  FaTimes,
-  FaTools,
-} from "react-icons/fa";
+import { FaExclamationTriangle, FaSpinner, FaTimes } from "react-icons/fa";
 import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQueryClient } from "react-query";
@@ -14,6 +9,7 @@ import {
 } from "../../../../../hooks/useMaintanance";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { GiCarKey } from "react-icons/gi";
 
 type Props = {
   show: boolean;
@@ -21,14 +17,14 @@ type Props = {
   request: IMaintenceRequest;
 };
 
-const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
+const DeliverVehicleModal = ({ show, handleClose, request }: Props) => {
   const {
     register,
     reset: resetForm,
     handleSubmit,
   } = useForm<EditMaintanceCredentials>({
     defaultValues: {
-      status: 5,
+      status: 7,
     },
   });
   const { editMaintance } = useMaintance();
@@ -39,7 +35,7 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
     {
       onSuccess: () =>
         Promise.all([
-          toast.success("Manutenção iniciada com sucesso!!"),
+          toast.success("Veiculo entregue com sucesso!!"),
           handleClose(),
           query.invalidateQueries("wsReq"),
         ]),
@@ -54,7 +50,7 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
   }
 
   return (
-    <Modal isOpen={show} hidden={handleClose} modalName="Iniciar manutenção.">
+    <Modal isOpen={show} hidden={handleClose} modalName="Anexar orçamento.">
       <div>
         <div className="text-yellow-400 w-fit  mx-auto m-4 ">
           <FaExclamationTriangle size={250} />
@@ -72,10 +68,10 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="flex flex-col gap-1">
-          <span>Prazo para entrega do veiculo:</span>
+          <span className="font-bold">Entregue à:</span>
           <input
-            type="datetime-local"
-            {...register("deadlineToForward")}
+            type="text"
+            {...register("checkoutBy")}
             required
             className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
           />
@@ -99,11 +95,11 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
           >
             {isLoading ? (
               <>
-                <FaSpinner className="animate-spin" /> Iniciando Manutenção
+                <FaSpinner className="animate-spin" /> Entregando veiculo
               </>
             ) : (
               <>
-                <FaTools /> Iniciar Manutenção
+                <GiCarKey size={25} /> Entregar Veiculo
               </>
             )}
           </button>
@@ -113,4 +109,4 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
   );
 };
 
-export default StartMaintenanceModal;
+export default DeliverVehicleModal;

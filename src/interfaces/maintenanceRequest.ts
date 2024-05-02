@@ -1,4 +1,5 @@
 import { IUser } from "./user";
+import { IWorkshop } from "./workShop";
 
 export interface IMaintenceRequest {
   id: number;
@@ -16,6 +17,7 @@ export interface IMaintenceRequest {
   deadlineToDeliver?: Date | string;
   delivered: boolean;
   deliveredAt?: Date | string;
+  Workshop?: IWorkshop;
   status: number;
   atendedBy?: string;
   atendedAt?: Date;
@@ -25,7 +27,7 @@ export interface IMaintenceRequest {
   finishedAt?: Date;
   checkoutBy?: string;
   checkoutAt?: Date | string;
-  budget?: IBudget[];
+  budgets?: IBudget[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,5 +1,5 @@
 import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
-import WaitingDelivery from "../../cards/waitingDelivery";
+import InMaintenanceCard from "../../cards/inMaintenance";
 import { Folder } from "../folder";
 
 const InMaintenanceFolder = ({
@@ -10,7 +10,7 @@ const InMaintenanceFolder = ({
   return (
     <Folder folderName="Em manutenção">
       {requests.length > 0 ? (
-        requests.map((req) => <WaitingDelivery request={req} key={req.id} />)
+        requests.map((req) => <InMaintenanceCard request={req} key={req.id} />)
       ) : (
         <p className="text-center">
           Nenhum veiculo pendente de entrega para oficina!

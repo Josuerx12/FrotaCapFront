@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
 import MaintenceRequestDetails from "../../modals/maintenceRequests/details";
 
-const WaitingDelivery = ({ request }: { request: IMaintenceRequest }) => {
+const WaitingCollectCard = ({ request }: { request: IMaintenceRequest }) => {
   const [isDetaling, setIsDetaling] = useState(false);
 
   return (
@@ -16,7 +16,7 @@ const WaitingDelivery = ({ request }: { request: IMaintenceRequest }) => {
       <div
         onClick={() => setIsDetaling((prev) => !prev)}
         title="Clique para ver detalhes!"
-        className="w-11/12 border text-neutral-900 group mx-auto cursor-pointer hover:scale-105 hover:shadow duration-200 ease-linear bg-gray-100 rounded-lg p-2 relative before:w-full before:h-2 before:absolute before:bottom-0 before:left-0 before:bg-red-500 before:animate-pulse before:rounded-b-md"
+        className="w-11/12 border text-neutral-900 group mx-auto cursor-pointer hover:scale-105 hover:shadow duration-200 ease-linear bg-gray-100 rounded-lg p-2 relative before:w-full before:h-2 before:absolute before:bottom-0 before:left-0 before:bg-green-500 before:rounded-b-md"
       >
         <h6 className="text-lg text-center">
           <span className="font-bold capitalize"> Numero da solicitação:</span>{" "}
@@ -31,14 +31,18 @@ const WaitingDelivery = ({ request }: { request: IMaintenceRequest }) => {
           {request.Owner.phone}
         </p>
         <p>
-          <span className="font-bold capitalize">Solicitado dia:</span>{" "}
-          {new Date(request.createdAt).toLocaleString("pt-BR")}
+          <span className="font-bold capitalize">Manutenção começou:</span>{" "}
+          {request.serviceStartAt &&
+            new Date(request.serviceStartAt).toLocaleString("pt-BR")}
         </p>
-
         <p>
-          <span className="font-bold capitalize">Levar até a oficina:</span>{" "}
-          {request.deadlineToDeliver &&
-            new Date(request.deadlineToDeliver).toLocaleString("pt-BR")}
+          <span className="font-bold capitalize">Manutenção Terminou:</span>{" "}
+          {request.serviceEndAt &&
+            new Date(request.serviceEndAt).toLocaleString("pt-BR")}
+        </p>
+        <p>
+          <span className="font-bold capitalize">Oficina responsavel:</span>{" "}
+          {request.Workshop?.name}
         </p>
 
         <div className="capitalize opacity-0 flex  group-hover:opacity-100 duration-200 ease-in-out justify-center p-2 font-bold">
@@ -49,4 +53,4 @@ const WaitingDelivery = ({ request }: { request: IMaintenceRequest }) => {
   );
 };
 
-export default WaitingDelivery;
+export default WaitingCollectCard;

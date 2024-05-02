@@ -16,6 +16,9 @@ import ReciveVehicleModal from "../actions/recieveVehicle";
 import SendBudgetModal from "../actions/sendBudget";
 import StartMaintenanceModal from "../actions/startMaintenance";
 import FinishMaintenanceModal from "../actions/finishMaintenance";
+import { useTimeCalc } from "../../../../hooks/useTimeCalc";
+import { GiCarKey } from "react-icons/gi";
+import DeliverVehicleModal from "../actions/deliverVehicle";
 
 type Props = {
   show: boolean;
@@ -30,9 +33,12 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
   const [isSendingBudget, setIsSendingBudget] = useState(false);
   const [isStartingMaintenance, setIsStartingMaintenance] = useState(false);
   const [isFinishingMaintenance, setIsFinishingMaintenance] = useState(false);
+  const [isDelivering, setIsDelivering] = useState(false);
 
   const { user } = useAuth();
   const { workshop } = useAuthWs();
+
+  const { milissegundosParaHorasMinutos } = useTimeCalc();
 
   return (
     <>
@@ -65,6 +71,11 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
         show={isFinishingMaintenance}
         handleClose={() => setIsFinishingMaintenance((prev) => !prev)}
         request={request}
+      />
+      <DeliverVehicleModal
+        request={request}
+        show={isDelivering}
+        handleClose={() => setIsDelivering((prev) => !prev)}
       />
       <Modal
         isOpen={show}
@@ -136,6 +147,36 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
               </div>
             </div>
 
+            {request.Workshop && (
+              <>
+                <h3 className="font-semibold capitalize">Dados da Oficina:</h3>
+                <div className="flex gap-4 flex-wrap">
+                  <div className="flex flex-col basis-52 flex-grow sm:flex-grow-0">
+                    <label>Nome</label>
+                    <input
+                      className="bg-sky-200 disabled:bg-sky-100 outline-blue-400 p-2 rounded w-full"
+                      type="text"
+                      disabled
+                      value={request.Workshop.name}
+                    />
+                  </div>
+                  <div className="flex flex-col basis-52 flex-grow">
+                    <label>Endereço</label>
+                    <input
+                      className="bg-sky-200 disabled:bg-sky-100 outline-blue-400 p-2 rounded w-full"
+                      type="text"
+                      disabled
+                      value={
+                        request.Workshop?.Address.street +
+                        ", nº: " +
+                        request.Workshop?.Address?.number
+                      }
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
             {request.status === 2 && (
               <>
                 <h3 className="font-semibold capitalize">Dados da entrega:</h3>
@@ -172,6 +213,39 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
                   </div>
                 </div>
               </>
+            )}
+
+            {request.budgets && request.budgets.length > 0 && (
+              <div className="flex gap-3  w-fit my-4 rounded-md">
+                {request.budgets.map((req, i) => (
+                  <div key={req.id} className="flex flex-col gap-2 ">
+                    <p>
+                      <span className="font-bold">Orçamento anexado:</span>
+                      {new Date(req.createdAt).toLocaleString("pt-BR")}
+                    </p>
+                    <a
+                      href={req.url}
+                      download={true}
+                      target="_blank"
+                      className="bg-blue-600 w-fit p-2 rounded text-white font-semibold"
+                    >
+                      Baixar Orçamento nº {i + 1}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {request.timeToSchedule && (
+              <label className="flex flex-col">
+                <span>Tempo de agendamento:</span>
+                <input
+                  className="bg-sky-200 disabled:bg-sky-100 outline-blue-400 p-2 rounded w-fit text-justify"
+                  type="text"
+                  disabled
+                  value={milissegundosParaHorasMinutos(request.timeToSchedule)}
+                />
+              </label>
             )}
 
             <label>
@@ -253,6 +327,19 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
               >
                 <FaTools size={25} />
                 Finalizar Manutenção
+              </button>
+            )}
+
+            {request.status === 6 && workshop && (
+              <button
+                className="flex items-center gap-1 p-2 font-semibold text-white rounded-lg bg-green-600 hover:bg-green-700 duration-200"
+                onClick={() => {
+                  handleClose();
+                  setIsDelivering((prev) => !prev);
+                }}
+              >
+                <GiCarKey size={25} />
+                Entregar veiculo
               </button>
             )}
           </div>

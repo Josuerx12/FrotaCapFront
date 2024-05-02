@@ -11,6 +11,8 @@ import { useState } from "react";
 import WaitingBudget from "../../components/folders/waitingBudget";
 import WaitingMaintenanceFolder from "../../components/folders/waitingMaintenance";
 import InMaintenanceFolder from "../../components/folders/inMaintenance";
+import CollectedFolder from "../../components/folders/Collected";
+import WaitingToCollectFolder from "../../components/folders/waitingToCollect";
 
 const Requests = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -28,6 +30,8 @@ const Requests = () => {
     waitingBudget,
     waitingMaintenance,
     inMaintenance,
+    collected,
+    waitingToCollect,
   } = useFilter(data);
 
   return (
@@ -81,6 +85,10 @@ const Requests = () => {
               {inMaintenance && (
                 <InMaintenanceFolder requests={inMaintenance} />
               )}
+              {waitingToCollect && (
+                <WaitingToCollectFolder requests={waitingToCollect} />
+              )}
+              {collected && <CollectedFolder requests={collected} />}
             </>
           )}
         </div>

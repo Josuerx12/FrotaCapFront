@@ -12,9 +12,7 @@ const WaitingMaintenanceFolder = ({
       {requests.length > 0 ? (
         requests.map((req) => <WaitingDelivery request={req} key={req.id} />)
       ) : (
-        <p className="text-center">
-          Nenhum veiculo pendente de entrega para oficina!
-        </p>
+        <p className="text-center">Nenhum veiculo esperando manutenção!</p>
       )}
     </Folder>
   );

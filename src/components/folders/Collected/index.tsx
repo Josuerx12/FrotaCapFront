@@ -1,12 +1,12 @@
 import { IMaintenceRequest } from "../../../interfaces/maintenanceRequest";
-import WaitingDelivery from "../../cards/waitingDelivery";
+import CollectedCard from "../../cards/collected";
 import { Folder } from "../folder";
 
-const InWorkshopFolder = ({ requests }: { requests: IMaintenceRequest[] }) => {
+const CollectedFolder = ({ requests }: { requests: IMaintenceRequest[] }) => {
   return (
-    <Folder folderName="Aguardando orçamento">
+    <Folder folderName="Coletado">
       {requests.length > 0 ? (
-        requests.map((req) => <WaitingDelivery request={req} key={req.id} />)
+        requests.map((req) => <CollectedCard request={req} key={req.id} />)
       ) : (
         <p className="text-center">
           Nenhum veiculo pendente de entrega para oficina!
@@ -16,4 +16,4 @@ const InWorkshopFolder = ({ requests }: { requests: IMaintenceRequest[] }) => {
   );
 };
 
-export default InWorkshopFolder;
+export default CollectedFolder;
