@@ -6,7 +6,6 @@ export interface IUser {
   email: string;
   phone: string;
   frotas: boolean;
-  workshop: boolean;
   admin: boolean;
   requester: boolean;
   MaintenceRequest: IMaintenceRequest[];
@@ -20,5 +19,4 @@ export interface ICreateUserCredentials {
   confirmPassword: string;
   admin: boolean;
   frotas: boolean;
-  workshop: boolean;
 }

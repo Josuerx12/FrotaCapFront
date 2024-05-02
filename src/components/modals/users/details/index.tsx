@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Modal from "../../modal";
-import { IUser } from "../../../../interfaces/user";
 import {
   FaEye,
   FaEyeSlash,
@@ -16,6 +15,7 @@ import { useUser } from "../../../../hooks/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { FaUserPen } from "react-icons/fa6";
+import { IUser } from "../../../../interfaces/user";
 
 type Props = {
   show: boolean;
@@ -23,9 +23,14 @@ type Props = {
   user: IUser;
 };
 
-type EditCredentials = {
+type EditCredentialsUser = {
+  name: string;
+  phone: string;
+  email: string;
   password: string;
   confirmPassword: string;
+  admin: boolean;
+  frotas: boolean;
 };
 
 const UserDetails = ({ show, handleClose, user }: Props) => {
@@ -33,21 +38,19 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
 
   const query = useQueryClient();
 
-  const { register, handleSubmit, watch, reset } = useForm<
-    IUser & EditCredentials
-  >({
-    defaultValues: {
-      admin: user.admin,
-      email: user.email,
-      frotas: user.frotas,
-      id: user.id,
-      name: user.name,
-      phone: user.phone,
-      workshop: user.workshop,
-      password: undefined,
-      confirmPassword: undefined,
-    },
-  });
+  const { register, handleSubmit, watch, reset } = useForm<EditCredentialsUser>(
+    {
+      defaultValues: {
+        admin: user.admin,
+        email: user.email,
+        frotas: user.frotas,
+        name: user.name,
+        phone: user.phone,
+        password: undefined,
+        confirmPassword: undefined,
+      },
+    }
+  );
 
   const { mutateAsync, isLoading } = useMutation("editUser", editUser, {
     onSuccess: (data) =>
@@ -63,7 +66,7 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  async function onSubmit(data: IUser & EditCredentials) {
+  async function onSubmit(data: EditCredentialsUser) {
     const credentials: Record<string, string | boolean> = {};
 
     if (data.email !== user.email) {
@@ -92,10 +95,6 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
 
     if (data.admin !== user.admin) {
       credentials["admin"] = data.admin;
-    }
-
-    if (data.workshop !== user.workshop) {
-      credentials["workshop"] = data.workshop;
     }
 
     await mutateAsync({ id: user.id, credentials });
@@ -225,16 +224,7 @@ const UserDetails = ({ show, handleClose, user }: Props) => {
               />
               <label>Administrador</label>
             </div>
-            <div className="flex gap-2 items-center">
-              <input
-                type="checkbox"
-                className="w-4 h-4"
-                disabled={!isEditing}
-                checked={watch("workshop")}
-                {...register("workshop")}
-              />
-              <label>Oficina</label>
-            </div>
+
             <div className="flex gap-2 items-center">
               <input
                 type="checkbox"
