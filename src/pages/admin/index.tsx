@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { FaCar, FaUserAlt } from "react-icons/fa";
+import { FaCar, FaTools, FaUserAlt } from "react-icons/fa";
 import UsersTable from "../../components/tables/users";
 import VehiclesTable from "../../components/tables/vehicles";
 import { IoBusiness } from "react-icons/io5";
 import ProviderTable from "../../components/tables/providers";
+import WorkshopsTable from "../../components/tables/workshops";
 
 const Admin = () => {
   const [showing, setShowing] = useState("users");
@@ -25,6 +26,14 @@ const Admin = () => {
             <FaUserAlt /> Usuários
           </button>
           <button
+            onClick={() => setShowing("workshops")}
+            className={`${
+              showing === "workshops" && "bg-neutral-700 text-white"
+            } flex items-center gap-2 text-lg  p-2 duration-200 ease font-semibold`}
+          >
+            <FaTools /> Oficinas
+          </button>
+          <button
             onClick={() => setShowing("providers")}
             className={`${
               showing === "providers" && "bg-neutral-700 text-white"
@@ -43,6 +52,7 @@ const Admin = () => {
         </div>
 
         {showing === "users" && <UsersTable />}
+        {showing === "workshops" && <WorkshopsTable />}
         {showing === "providers" && <ProviderTable />}
         {showing === "vehicles" && <VehiclesTable />}
       </div>

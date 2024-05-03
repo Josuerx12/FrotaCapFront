@@ -3,7 +3,9 @@ import Cookies from "js-cookie";
 import { api } from "../config/api";
 
 export type CreateMaintanceCredentials = {
+  os: number;
   driverName: string;
+  driverPhone: string;
   km: number;
   plate: string;
   service: string;
@@ -24,6 +26,7 @@ const useMaintance = () => {
 
   async function createMaintance(credentials: CreateMaintanceCredentials) {
     try {
+      credentials.os = Number(credentials.os);
       const res = await api(token).post("/maintance-request", credentials);
 
       return res.data;

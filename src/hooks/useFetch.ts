@@ -6,6 +6,7 @@ import { IMaintenceRequest } from "../interfaces/maintenanceRequest";
 import { IUser } from "../interfaces/user";
 import { IVehicle } from "../interfaces/vehicle";
 import { IProvider } from "../interfaces/provider";
+import { IWorkshop } from "../interfaces/workShop";
 
 function useFetch() {
   const token = Cookies.get("refreshToken");
@@ -49,7 +50,7 @@ function useFetch() {
     }
   }
 
-  async function fetchWorkshops(): Promise<IUser[]> {
+  async function fetchWorkshops(): Promise<IWorkshop[]> {
     try {
       const res = (await api(token).get("/workshop")).data.workshops;
       return res;

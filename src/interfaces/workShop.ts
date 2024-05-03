@@ -4,6 +4,7 @@ export interface IWorkshop {
   id: number;
   name: string;
   email: string;
+  phone: string;
   createdAt: Date | string;
   updatedAt: Date | string;
   Address: IAddress;

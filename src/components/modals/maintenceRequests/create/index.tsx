@@ -57,25 +57,47 @@ const CreateMaintanceRequestModal = ({ show, handleClose }: Props) => {
   return (
     <Modal
       isOpen={show}
-      isClickOutHiddeble
-      hidden={handleClose}
+      hidden={() => {
+        handleClose();
+        resetForm();
+        reset();
+      }}
       modalName="Gerar nova solicitação de manutenção"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <label className="flex flex-col gap-1">
+          <span>Nº da Ordem de Serviço</span>
+          <input
+            className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
+            {...register("os")}
+            placeholder="Ex: 32554"
+            type="number"
+          />
+        </label>
         <label className="flex flex-col gap-1">
           <span>Motorista</span>
           <input
             className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
             {...register("driverName")}
-            placeholder="Jhon Doe"
+            placeholder="Ex: Jhon Doe"
             type="text"
+          />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          <span>Nº Telefone do Motorista</span>
+          <input
+            className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
+            {...register("driverPhone")}
+            placeholder="Ex: 22997929644"
+            type="tel"
           />
         </label>
 
         <label className="flex flex-col gap-1">
           <span>Km</span>
           <input
-            placeholder="0000"
+            placeholder="Ex: 12608"
             className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
             {...register("km")}
             type="number"

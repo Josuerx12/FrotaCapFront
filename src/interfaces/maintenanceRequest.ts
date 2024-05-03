@@ -5,6 +5,8 @@ export interface IMaintenceRequest {
   id: number;
   plate: string;
   driverName: string;
+  driverPhone: string;
+  protocol: string;
   km: number;
   service: string;
   serviceEndAt?: string | Date;
