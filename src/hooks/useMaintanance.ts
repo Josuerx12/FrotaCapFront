@@ -18,6 +18,7 @@ export type EditMaintanceCredentials = {
   deadlineToForward?: string | Date;
   budget?: FileList;
   checkoutBy?: string;
+  protocol?: string;
 };
 
 const useMaintance = () => {

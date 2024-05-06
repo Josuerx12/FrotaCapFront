@@ -17,6 +17,7 @@ type FinishScheduleCredentials = {
   deadlineToDeliver: Date;
   workShopId: number;
   status: number;
+  protocol: string;
 };
 
 const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
@@ -85,6 +86,16 @@ const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
               {...register("deadlineToDeliver")}
               className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
               type="datetime-local"
+              disabled={isLoadingWorkshops || isLoading}
+              required
+            />
+          </label>
+          <label className="flex flex-col gap-1">
+            <span>Numero de protocolo</span>
+            <input
+              {...register("protocol")}
+              className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
+              type="text"
               disabled={isLoadingWorkshops || isLoading}
               required
             />
