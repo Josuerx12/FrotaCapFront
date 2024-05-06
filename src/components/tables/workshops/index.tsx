@@ -3,8 +3,8 @@ import { FaFilter, FaPlus } from "react-icons/fa";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { useQuery, useQueryClient } from "react-query";
 import { useFetch } from "../../../hooks/useFetch";
-import CreateVehicle from "../../modals/vehicles/create";
 import WorkshopTableRow from "./workshop";
+import CreateWorkshopModal from "../../modals/workshop/create";
 
 const WorkshopsTable = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -17,7 +17,7 @@ const WorkshopsTable = () => {
 
   return (
     <div className="flex flex-col gap-6 mx-auto w-full px-4">
-      <CreateVehicle
+      <CreateWorkshopModal
         show={isCreating}
         handleClose={() => setIsCreating((prev) => !prev)}
       />
