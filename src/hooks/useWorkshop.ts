@@ -20,6 +20,7 @@ export type CreateWorkshopCredentials = {
 export type EditWorkshopCredentials = {
   email?: string;
   name?: string;
+  phone?: string;
   password?: string;
 };
 

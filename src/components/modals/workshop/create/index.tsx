@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaMagnifyingGlass, FaPlus, FaSpinner } from "react-icons/fa6";
 import Modal from "../../modal";
 import { useForm } from "react-hook-form";
@@ -5,23 +6,49 @@ import {
   CreateWorkshopCredentials,
   useWorkshop,
 } from "../../../../hooks/useWorkshop";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useFindByCep } from "../../../../hooks/useFindByCep";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+import ErrorLabel from "../../../errorLabel";
 
 type Props = {
   handleClose: () => void;
   show: boolean;
 };
 
+type MutationError = {
+  message: string[];
+};
+
 const CreateWorkshopModal = ({ handleClose, show }: Props) => {
-  const { getValues, register, handleSubmit, watch, setValue, reset } =
-    useForm<CreateWorkshopCredentials>();
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset: resetForm,
+  } = useForm<CreateWorkshopCredentials>();
+
+  const query = useQueryClient();
 
   const { createWorkshop } = useWorkshop();
   const { findByCep } = useFindByCep();
 
-  const { mutateAsync, isLoading } = useMutation("addWorkshop", createWorkshop);
+  const { mutateAsync, isLoading, reset, error } = useMutation<
+    any,
+    MutationError,
+    CreateWorkshopCredentials
+  >("addWorkshop", createWorkshop, {
+    onSuccess: (data) =>
+      Promise.all([
+        toast.success(data),
+        query.invalidateQueries("workshops"),
+        handleClose(),
+        resetForm(),
+      ]),
+  });
 
   async function onSubmit(data: CreateWorkshopCredentials) {
     await mutateAsync(data);
@@ -42,6 +69,7 @@ const CreateWorkshopModal = ({ handleClose, show }: Props) => {
       isOpen={show}
       hidden={() => {
         handleClose();
+        resetForm();
         reset();
       }}
       modalName="Adicionar uma nova oficina."
@@ -155,12 +183,15 @@ const CreateWorkshopModal = ({ handleClose, show }: Props) => {
           />
         </label>
 
+        {error && error.message && <ErrorLabel>{error.message[0]}</ErrorLabel>}
+
         <div className="flex items-center justify-center gap-4">
           <button
             type="button"
             disabled={isLoading}
             onClick={() => {
               reset();
+              resetForm();
               handleClose();
             }}
             className="w-1/2 flex disabled:bg-red-400 justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-rose-400 via-red-500 to-red-700"
