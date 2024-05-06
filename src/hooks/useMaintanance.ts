@@ -57,6 +57,9 @@ const useMaintance = () => {
         String(credentials.deadlineToForward)
       );
     }
+    if (credentials.protocol) {
+      formData.append("protocol", String(credentials.protocol));
+    }
     if (credentials.deadlineToDeliver) {
       formData.append(
         "deadlineToDeliver",
