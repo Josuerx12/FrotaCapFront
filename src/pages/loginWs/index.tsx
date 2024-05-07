@@ -69,7 +69,7 @@ const LoginWs = () => {
               type={passwordVisible ? "text" : "password"}
               placeholder="********"
               {...register("password")}
-              className="flex-1 p-2 rounded outline-sky-700"
+              className="flex-grow p-2 rounded outline-sky-700"
             />
             <div
               className="bg-gray-800 p-2 rounded cursor-pointer group"

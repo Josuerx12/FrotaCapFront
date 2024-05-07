@@ -51,20 +51,24 @@ const Workshop = () => {
             <p>Carregando...</p>
           ) : (
             <>
-              {deliverToTheWorkshop && (
+              {deliverToTheWorkshop && deliverToTheWorkshop.length > 0 && (
                 <WaitingForDeliveringFolder requests={deliverToTheWorkshop} />
               )}
-              {waitingBudget && <WaitingBudget requests={waitingBudget} />}
-              {waitingMaintenance && (
+              {waitingBudget && waitingBudget.length > 0 && (
+                <WaitingBudget requests={waitingBudget} />
+              )}
+              {waitingMaintenance && waitingMaintenance.length > 0 && (
                 <WaitingMaintenanceFolder requests={waitingMaintenance} />
               )}
-              {inMaintenance && (
+              {inMaintenance && inMaintenance.length > 0 && (
                 <InMaintenanceFolder requests={inMaintenance} />
               )}
-              {waitingToCollect && (
+              {waitingToCollect && waitingToCollect.length > 0 && (
                 <WaitingToCollectFolder requests={waitingToCollect} />
               )}
-              {collected && <CollectedFolder requests={collected} />}
+              {collected && collected.length > 0 && (
+                <CollectedFolder requests={collected} />
+              )}
             </>
           )}
         </div>
