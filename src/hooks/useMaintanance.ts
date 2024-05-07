@@ -19,6 +19,7 @@ export type EditMaintanceCredentials = {
   budget?: FileList;
   checkoutBy?: string;
   protocol?: string;
+  evidences?: FileList;
 };
 
 const useMaintance = () => {
@@ -45,8 +46,16 @@ const useMaintance = () => {
   }): Promise<string> {
     const formData = new FormData();
 
+    const { evidences } = credentials;
+
     if (credentials.budget) {
-      formData.append("budget", credentials.budget[0]);
+      formData.append("files", credentials.budget[0]);
+    }
+    if (evidences) {
+      console.log(evidences);
+      for (let i = 0; i < evidences.length; i++) {
+        formData.append("files", evidences[i]);
+      }
     }
     if (credentials.status) {
       formData.append("status", String(credentials.status));

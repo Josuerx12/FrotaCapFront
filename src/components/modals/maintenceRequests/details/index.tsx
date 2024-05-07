@@ -1,6 +1,7 @@
 import {
   FaCalendarCheck,
   FaCalendarPlus,
+  FaDownload,
   FaFileArchive,
   FaTools,
 } from "react-icons/fa";
@@ -85,6 +86,12 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
       >
         <form>
           <div className="flex flex-col gap-2">
+            {request.protocol && (
+              <h2 className="text-2xl">
+                <span className="font-bold">Nº Protocolo: </span>{" "}
+                {request.protocol}
+              </h2>
+            )}
             <h3 className="font-semibold capitalize">Dados do solicitante:</h3>
             <div className="flex gap-4 flex-wrap">
               <div className="flex flex-col basis-52 flex-grow">
@@ -213,6 +220,33 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
                   </div>
                 </div>
               </>
+            )}
+
+            {request.evidence && request.evidence.length > 0 && (
+              <div className="flex flex-col gap-6">
+                <h3 className="font-bold text-xl">Evidenciais</h3>
+
+                <div className="flex gap-6 flex-wrap">
+                  {request.evidence.map((ev) => (
+                    <div key={ev.id} className="flex flex-col gap-4">
+                      <img
+                        className="w-44 h-44 hover:scale-110 duration-300 cursor-pointer ease-in-out border-2 rounded-lg shadow-lg bg-black"
+                        src={ev.url}
+                        alt={`Evidencia id: ${ev.id}`}
+                      />
+                      <a
+                        className="flex items-center gap-3 bg-neutral-900 hover:bg-neutral-600 active:bg-neutral-500 duration-200 text-white p-2 rounded"
+                        href={ev.url}
+                        title={"Clique para baixa a evidencia Nº " + ev.id}
+                        download={true}
+                        target="_blank"
+                      >
+                        Baixar Evidencia <FaDownload />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
 
             {request.budgets && request.budgets.length > 0 && (

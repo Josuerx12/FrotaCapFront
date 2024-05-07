@@ -6,7 +6,7 @@ export interface IMaintenceRequest {
   plate: string;
   driverName: string;
   driverPhone: string;
-  protocol: string;
+  protocol?: string;
   km: number;
   service: string;
   serviceEndAt?: string | Date;
@@ -32,6 +32,7 @@ export interface IMaintenceRequest {
   budgets?: IBudget[];
   createdAt: Date;
   updatedAt: Date;
+  evidence?: IEvidence[];
 }
 
 export interface IBudget {
@@ -41,4 +42,14 @@ export interface IBudget {
   maintanceId: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IEvidence {
+  id: number;
+  key: string;
+  url: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+  maintenanceId: number;
 }
