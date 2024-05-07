@@ -29,6 +29,7 @@ const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
           toast.success("Agendamento iniciou com sucesso!"),
           handleClose(),
           query.invalidateQueries("allReq"),
+          query.invalidateQueries("userReq"),
         ]),
     }
   );

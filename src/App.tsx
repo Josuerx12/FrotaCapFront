@@ -12,6 +12,7 @@ import Admin from "./pages/admin";
 import { useAuthWs } from "./store/useAuthWs";
 import LoginWs from "./pages/loginWs";
 import Workshop from "./pages/workshop";
+import FrotasPage from "./pages/frotas";
 
 const App = () => {
   const { getUser, user } = useAuth();
@@ -53,6 +54,16 @@ const App = () => {
         <Route
           path="/oficina"
           element={workshop ? <Workshop /> : <Navigate to="/solicitacoes" />}
+        />
+        <Route
+          path="/frotas"
+          element={
+            user && user.frotas ? (
+              <FrotasPage />
+            ) : (
+              <Navigate to="/solicitacoes" />
+            )
+          }
         />
         <Route
           path="/login"

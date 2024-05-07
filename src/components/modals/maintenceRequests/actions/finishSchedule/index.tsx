@@ -42,6 +42,7 @@ const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
           toast.success("Agendamento Finalizado!"),
           handleClose(),
           query.invalidateQueries("allReq"),
+          query.invalidateQueries("userReq"),
           resetForm(),
         ]),
     }

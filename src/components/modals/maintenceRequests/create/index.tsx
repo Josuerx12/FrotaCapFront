@@ -43,6 +43,7 @@ const CreateMaintanceRequestModal = ({ show, handleClose }: Props) => {
     onSuccess: (data) =>
       Promise.all([
         query.invalidateQueries("allReq"),
+        query.invalidateQueries("userReq"),
         resetForm(),
         handleClose(),
         toast.success(data),
