@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   FaBars,
   FaCar,
-  FaSignInAlt,
   FaSignOutAlt,
   FaTimes,
   FaUserShield,
@@ -12,7 +11,6 @@ import { useAuth } from "../../store/useAuth";
 import { useAuthWs } from "../../store/useAuthWs";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownAuth, setDropdowAuth] = useState(false);
 
   const navigate = useNavigate();
 
@@ -98,32 +96,11 @@ const Navbar = () => {
           )}
           {!user && !workshop && (
             <li
-              onClick={() => {
-                setDropdowAuth((prev) => !prev);
-              }}
-              className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 ${
-                dropdownAuth ? "bg-pos-100" : "bg-pos-0"
-              }  bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
+              className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
             >
-              Autentique-se <FaUserShield size={20} />
-              <div
-                className={`${
-                  dropdownAuth ? "absolute" : "hidden"
-                } flex flex-col top-10 left-0 w-full bg-blue-300 rounded p-2`}
-              >
-                <Link
-                  className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
-                  to="/login"
-                >
-                  Usuário <FaSignInAlt />
-                </Link>
-                <Link
-                  className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
-                  to="/login/ws"
-                >
-                  Oficina <FaSignInAlt />
-                </Link>
-              </div>
+              <Link className="flex gap-2 items-center" to="/login">
+                Autentique-se <FaUserShield size={20} />
+              </Link>
             </li>
           )}
           {(user || workshop) && (
@@ -224,32 +201,15 @@ const Navbar = () => {
         )}
         {!user && !workshop && (
           <li
-            onClick={() => {
-              setDropdowAuth((prev) => !prev);
-            }}
-            className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 ${
-              dropdownAuth ? "bg-pos-100" : "bg-pos-0"
-            }  bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
+            className={`relative cursor-pointer flex gap-2 items-center bg-gradient-to-br font-semibold transition-all duration-300 ease-linear to-blue-600 via-sky-400  from-blue-600 bg-size-200 hover:bg-pos-100 px-2 py-1 rounded-md tracking-wider`}
           >
-            Autentique-se <FaUserShield size={20} />
-            <div
-              className={`${
-                dropdownAuth ? "absolute" : "hidden"
-              } flex flex-col top-10 left-0 w-full bg-blue-300 rounded p-2`}
+            <Link
+              onClick={() => setMobileOpen((prev) => !prev)}
+              className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
+              to="/login"
             >
-              <Link
-                className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
-                to="/login"
-              >
-                Usuário <FaSignInAlt />
-              </Link>
-              <Link
-                className="flex gap-2 items-center justify-between duration-200 hover:bg-blue-600 p-2 rounded"
-                to="/login/ws"
-              >
-                Oficina <FaSignInAlt />
-              </Link>
-            </div>
+              Autentique-se <FaUserShield size={20} />
+            </Link>
           </li>
         )}
         {(user || workshop) && (

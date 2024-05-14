@@ -10,9 +10,9 @@ import { useEffect } from "react";
 import { useAuth } from "./store/useAuth";
 import Admin from "./pages/admin";
 import { useAuthWs } from "./store/useAuthWs";
-import LoginWs from "./pages/loginWs";
 import Workshop from "./pages/workshop";
 import FrotasPage from "./pages/frotas";
+import AuthPage from "./pages/login";
 
 const App = () => {
   const { getUser, user } = useAuth();
@@ -73,14 +73,8 @@ const App = () => {
             ) : workshop ? (
               <Navigate to="/oficina" />
             ) : (
-              <Login />
+              <AuthPage />
             )
-          }
-        />
-        <Route
-          path="/login/ws"
-          element={
-            user || workshop ? <Navigate to="/solicitacoes" /> : <LoginWs />
           }
         />
       </Routes>

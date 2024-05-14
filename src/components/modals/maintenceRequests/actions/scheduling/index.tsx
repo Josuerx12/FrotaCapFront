@@ -1,9 +1,4 @@
-import {
-  FaExclamationTriangle,
-  FaHeadset,
-  FaSpinner,
-  FaTimes,
-} from "react-icons/fa";
+import { FaCar, FaHeadset, FaSpinner, FaTimes } from "react-icons/fa";
 import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQueryClient } from "react-query";
@@ -42,7 +37,7 @@ const SchedulingConfirmationModal = ({ show, handleClose, request }: Props) => {
     >
       <div>
         <div className="text-yellow-400 w-fit  mx-auto m-4 ">
-          <FaExclamationTriangle size={250} className="" />
+          <FaCar size={250} className="" />
         </div>
         <p className="text-xl font-bold text-center">
           Confirmar o inicio do atendimento:

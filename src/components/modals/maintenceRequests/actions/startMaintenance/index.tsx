@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  FaExclamationTriangle,
-  FaSpinner,
-  FaTimes,
-  FaTools,
-} from "react-icons/fa";
+import { FaCar, FaSpinner, FaTimes, FaTools } from "react-icons/fa";
 import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 import Modal from "../../../modal";
 import { useMutation, useQueryClient } from "react-query";
@@ -57,7 +52,7 @@ const StartMaintenanceModal = ({ show, handleClose, request }: Props) => {
     <Modal isOpen={show} hidden={handleClose} modalName="Iniciar manutenção.">
       <div>
         <div className="text-yellow-400 w-fit  mx-auto m-4 ">
-          <FaExclamationTriangle size={250} />
+          <FaCar size={250} />
         </div>
         <p className="text-xl font-bold text-center">
           Detalhes da solicitação:

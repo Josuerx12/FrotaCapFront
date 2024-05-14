@@ -1,105 +1,56 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useForm } from "react-hook-form";
-import { AuthCredentials, useAuth } from "../../store/useAuth";
-import { useMutation } from "react-query";
-import { toast } from "react-toastify";
-import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
+
 import { useState } from "react";
-import ErrorLabel from "../../components/errorLabel";
+import LoginUser from "../../components/loginUser";
+import LoginWs from "../../components/loginWs";
+import { FaCar, FaUser, FaUserShield } from "react-icons/fa";
+import { FaCircleArrowLeft } from "react-icons/fa6";
 
-type MutationError = {
-  email?: string;
-  password?: string;
-  message?: string;
-};
-
-const Login = () => {
-  const { register, handleSubmit, reset } = useForm<AuthCredentials>();
-
-  const { login, getUser } = useAuth();
-
-  const { mutateAsync, error } = useMutation<
-    any,
-    MutationError,
-    AuthCredentials
-  >("login", login, {
-    onSuccess: (data) =>
-      Promise.all([
-        toast.success(data),
-        getUser()
-          .then((res) => toast.success(res))
-          .catch((err) => {
-            toast.error("Error ao coletar os dados do usuário!");
-            console.log(err.message);
-          }),
-        reset(),
-      ]),
-  });
-
-  async function onAuth(data: AuthCredentials) {
-    await mutateAsync(data);
-  }
-
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const AuthPage = () => {
+  const [loginState, setLoginState] = useState(0);
 
   return (
-    <section className="w-full h-full  min-h-screen flex flex-col justify-center items-center">
-      <h3 className="text-3xl font-bold text-neutral-800 py-3 flex items-center gap-2">
-        Autentique-se - Usuário <FaUser />
-      </h3>
-      <form
-        className="max-w-screen-md w-11/12  bg-gradient-to-br from-sky-600 to-sky-500 p-6 flex flex-col gap-6 rounded-lg"
-        onSubmit={handleSubmit(onAuth)}
-      >
-        <div className="flex flex-col gap-4">
-          <label className="text-2xl text-white font-bold">E-mail</label>
-          <input
-            className="p-2 rounded outline-sky-700"
-            type="email"
-            {...register("email")}
-            placeholder="johndoe@email.com.br"
-          />
-          {error?.email && <ErrorLabel>{error.email}</ErrorLabel>}
+    <section className="w-7/12 mx-auto h-full  min-h-screen flex flex-col gap-5 items-center">
+      <h3 className="text-3xl font-bold text-neutral-800 py-3 mt-28 text-center">
+        Bem vindo ao FrotasCAP!
+      </h3>{" "}
+      {loginState !== 0 && (
+        <div className="w-full flex justify-end">
+          <button
+            onClick={() => setLoginState(0)}
+            className="flex items-center gap-2 justify-center bg-neutral-900 text-white p-2 rounded"
+          >
+            <FaCircleArrowLeft /> Alterar Metodo <FaUserShield />
+          </button>
         </div>
-        <div className="flex flex-col gap-4">
-          <label className="text-lg text-white font-bold">Senha</label>
-          <div className="flex gap-1 items-center">
-            <input
-              type={passwordVisible ? "text" : "password"}
-              placeholder="********"
-              {...register("password")}
-              className="flex-grow p-2 rounded outline-sky-700"
-            />
-            <div
-              className="bg-gray-800 p-2 rounded cursor-pointer group"
-              title="Vizualizar a senha"
-              onClick={() => setPasswordVisible((prev) => !prev)}
+      )}
+      {loginState === 0 && (
+        <div className="w-10/12 text-center  flex-1 flex flex-col gap-4">
+          <p className="text-lg text-justify md:text-center">
+            Selecione como deseja se autenticar para começar a utilizar o
+            frotasCAP.
+          </p>
+
+          <div className="flex gap-2 flex-wrap md:flex-nowrap">
+            <button
+              onClick={() => setLoginState(1)}
+              className="p-2 bg-sky-600 hover:bg-sky-500 duration-200  flex gap-2  flex-grow sm:flex-grow-0 items-center justify-center text-white text-2xl rounded w-1/2 "
             >
-              {passwordVisible ? (
-                <FaEyeSlash
-                  className="text-white group-hover:text-sky-400 "
-                  size={20}
-                />
-              ) : (
-                <FaEye
-                  className="text-white group-hover:text-sky-400 "
-                  size={20}
-                />
-              )}
-            </div>
+              Solicitante / Frotas <FaUser />
+            </button>
+            <button
+              onClick={() => setLoginState(2)}
+              className="p-2 bg-orange-600 hover:bg-orange-500 duration-200 flex gap-2  flex-grow sm:flex-grow-0 items-center justify-center text-white text-2xl rounded w-1/2 "
+            >
+              Oficina <FaCar />
+            </button>
           </div>
-          {error?.password && <ErrorLabel>{error.password}</ErrorLabel>}
         </div>
-        {error?.message && <ErrorLabel>{error.message}</ErrorLabel>}
-        <button
-          type="submit"
-          className="text-2xl bg-gray-800 hover:bg-gray-600 duration-200 ease-linear w-fit mx-auto py-2 px-3 rounded-lg text-white"
-        >
-          Acessar
-        </button>
-      </form>
+      )}
+      {loginState === 1 && <LoginUser />}
+      {loginState === 2 && <LoginWs />}
     </section>
   );
 };
 
-export default Login;
+export default AuthPage;

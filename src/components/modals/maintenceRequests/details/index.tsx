@@ -4,6 +4,7 @@ import {
   FaDownload,
   FaFileArchive,
   FaTools,
+  FaTrash,
 } from "react-icons/fa";
 import { IMaintenceRequest } from "../../../../interfaces/maintenanceRequest";
 import Modal from "../../modal";
@@ -20,6 +21,7 @@ import FinishMaintenanceModal from "../actions/finishMaintenance";
 import { useTimeCalc } from "../../../../hooks/useTimeCalc";
 import { GiCarKey } from "react-icons/gi";
 import DeliverVehicleModal from "../actions/deliverVehicle";
+import IsDeletingModal from "../actions/isDeleting";
 
 type Props = {
   show: boolean;
@@ -28,6 +30,8 @@ type Props = {
 };
 
 const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
+  const { user } = useAuth();
+
   const [isScheduling, setIsScheduling] = useState(false);
   const [isFinishSchedule, setIsFinishScheduling] = useState(false);
   const [isRecivingVehicle, setIsRecivingVehicle] = useState(false);
@@ -35,8 +39,8 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
   const [isStartingMaintenance, setIsStartingMaintenance] = useState(false);
   const [isFinishingMaintenance, setIsFinishingMaintenance] = useState(false);
   const [isDelivering, setIsDelivering] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const { user } = useAuth();
   const { workshop } = useAuthWs();
 
   const { milissegundosParaHorasMinutos } = useTimeCalc();
@@ -78,12 +82,30 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
         show={isDelivering}
         handleClose={() => setIsDelivering((prev) => !prev)}
       />
+      <IsDeletingModal
+        request={request}
+        show={isDeleting}
+        handleClose={() => setIsDeleting((prev) => !prev)}
+      />
       <Modal
         isOpen={show}
         modalName="Detalhes da solicitação"
         hidden={handleClose}
         isClickOutHiddeble={true}
       >
+        <div className="w-full flex justify-end">
+          {user?.admin && (
+            <button
+              onClick={() => {
+                handleClose();
+                setIsDeleting((prev) => !prev);
+              }}
+              className="bg-red-500 p-2 rounded flex text-white text-lg items-center gap-2"
+            >
+              Deletar <FaTrash />
+            </button>
+          )}
+        </div>
         <form>
           <div className="flex flex-col gap-2">
             {request.protocol && (

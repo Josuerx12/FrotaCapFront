@@ -94,7 +94,16 @@ const useMaintance = () => {
     }
   }
 
-  return { createMaintance, editMaintance };
+  async function deleteMaintanance(id: string) {
+    try {
+      const res = await api(token).delete("/maintance-request/" + id);
+      return res.data;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  }
+
+  return { createMaintance, editMaintance, deleteMaintanance };
 };
 
 export { useMaintance };

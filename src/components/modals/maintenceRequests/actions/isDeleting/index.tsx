@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { FaCar, FaSpinner, FaTimes, FaTools } from "react-icons/fa";
-import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
+import {
+  FaExclamationCircle,
+  FaSpinner,
+  FaTimes,
+  FaTrash,
+} from "react-icons/fa";
 import Modal from "../../../modal";
-import { useMutation, useQueryClient } from "react-query";
 import { useMaintance } from "../../../../../hooks/useMaintanance";
+import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import { IMaintenceRequest } from "../../../../../interfaces/maintenanceRequest";
 
 type Props = {
   show: boolean;
@@ -12,34 +16,38 @@ type Props = {
   request: IMaintenceRequest;
 };
 
-const ReciveVehicleModal = ({ show, handleClose, request }: Props) => {
-  const { editMaintance } = useMaintance();
+const IsDeletingModal = ({ show, handleClose, request }: Props) => {
+  const { deleteMaintanance } = useMaintance();
   const query = useQueryClient();
-  const { mutateAsync, isLoading } = useMutation("reciveVeh", editMaintance, {
-    onSuccess: () =>
-      Promise.all([
-        toast.success("Recebido na oficina com sucesso!"),
-        handleClose(),
-        query.invalidateQueries("wsReq"),
-      ]),
-    onError: (err: any) => {
-      toast.error(String(err.message));
-    },
-  });
+
+  const { isLoading, reset, mutateAsync } = useMutation(
+    "deletingMaintanance",
+    deleteMaintanance,
+    {
+      onSuccess: () =>
+        Promise.all([
+          toast.success("Deleção concluida com sucesso!"),
+          handleClose(),
+          query.invalidateQueries("allReq"),
+          query.invalidateQueries("userReq"),
+        ]),
+    }
+  );
 
   return (
     <Modal
       isOpen={show}
       hidden={handleClose}
-      modalName="Confirmação de recebimento de veiculo."
+      modalName="Confirmar deleção da solicitação?"
     >
       <div>
-        <div className="text-yellow-400 w-fit  mx-auto m-4 ">
-          <FaCar size={250} />
+        <div className="text-red-400 w-fit  mx-auto m-4 ">
+          <FaExclamationCircle size={250} />
         </div>
-        <p className="text-xl font-bold text-center">Confirmar recebimento:</p>
+        <p className="text-xl font-bold text-center">
+          Confirmar deleção da solicitação numero {request.id}
+        </p>
         <p className="text-xl mb-4 text-center">
-          <span className="font-bold">Solicitação numero: </span> {request.id} |
           <span className="font-bold">Solicitado por: </span>{" "}
           {request.Owner.name} | <span className="font-bold">Veiculo: </span>{" "}
           {request.plate}?
@@ -51,6 +59,7 @@ const ReciveVehicleModal = ({ show, handleClose, request }: Props) => {
           type="button"
           disabled={isLoading}
           onClick={() => {
+            reset();
             handleClose();
           }}
           className="w-1/2 flex disabled:bg-red-400 justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-rose-400 via-red-500 to-red-700"
@@ -58,19 +67,17 @@ const ReciveVehicleModal = ({ show, handleClose, request }: Props) => {
           <FaTimes /> Cancelar
         </button>
         <button
-          onClick={async () =>
-            await mutateAsync({ id: request.id, credentials: { status: 3 } })
-          }
+          onClick={async () => await mutateAsync(String(request.id))}
           disabled={isLoading}
           className="w-1/2 disabled:bg-blue-600  flex justify-center items-center gap-2 bg-gradient-to-r bg-size-200 bg-pos-0 hover:bg-pos-100 duration-300 p-2 text-lg rounded-md  text-white font-bold from-green-400 via-emerald-400 to-emerald-600"
         >
           {isLoading ? (
             <>
-              <FaSpinner className="animate-spin" /> Confirmando recebimento
+              <FaSpinner className="animate-spin" /> Iniciando Remoção
             </>
           ) : (
             <>
-              <FaTools /> confirmar recebimento
+              <FaTrash /> Deletar Solicitação
             </>
           )}
         </button>
@@ -79,4 +86,4 @@ const ReciveVehicleModal = ({ show, handleClose, request }: Props) => {
   );
 };
 
-export default ReciveVehicleModal;
+export default IsDeletingModal;
