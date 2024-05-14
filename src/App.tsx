@@ -4,7 +4,6 @@ import { Navbar } from "./components/navbar";
 import { Home } from "./pages/home";
 import Requests from "./pages/requests";
 import { Bounce, ToastContainer } from "react-toastify";
-import Login from "./pages/login";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useAuth } from "./store/useAuth";
