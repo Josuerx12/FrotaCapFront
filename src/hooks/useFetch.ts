@@ -35,6 +35,7 @@ function useFetch() {
     try {
       const res = (await api(wsToken).get("/maintance-request/ws")).data
         .requests;
+
       return res;
     } catch (error: any) {
       throw error.response.data;
