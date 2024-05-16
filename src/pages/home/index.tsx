@@ -4,22 +4,13 @@ import HomeSlider from "../../components/homeSlider";
 const Home = () => {
   const imgs = [
     {
-      url: "/3.webp",
+      url: "/1.png",
     },
     {
-      url: "/4.webp",
+      url: "/2.png",
     },
     {
-      url: "/5.webp",
-    },
-    {
-      url: "/6.webp",
-    },
-    {
-      url: "/7.webp",
-    },
-    {
-      url: "/8.webp",
+      url: "/3.png",
     },
   ];
   return (
