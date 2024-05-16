@@ -20,6 +20,7 @@ export type EditMaintanceCredentials = {
   checkoutBy?: string;
   protocol?: string;
   evidences?: FileList;
+  osDocument?: FileList;
 };
 
 const useMaintance = () => {
@@ -50,6 +51,9 @@ const useMaintance = () => {
 
     if (credentials.budget) {
       formData.append("files", credentials.budget[0]);
+    }
+    if (credentials.osDocument) {
+      formData.append("files", credentials.osDocument[0]);
     }
     if (evidences) {
       console.log(evidences);

@@ -18,6 +18,7 @@ type FinishScheduleCredentials = {
   workShopId: number;
   status: number;
   protocol: string;
+  osDocument: FileList;
 };
 
 const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
@@ -97,6 +98,18 @@ const FinishScheduleModal = ({ show, handleClose, request }: Props) => {
               {...register("protocol")}
               className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
               type="text"
+              disabled={isLoadingWorkshops || isLoading}
+              required
+            />
+          </label>
+          <label className="flex flex-col gap-1">
+            <span>Anexar O.S.</span>
+            <input
+              {...register("osDocument")}
+              className="flex-1 p-2 rounded outline-sky-700 bg-neutral-100 focus:bg-white"
+              type="file"
+              multiple={false}
+              accept="application/pdf"
               disabled={isLoadingWorkshops || isLoading}
               required
             />

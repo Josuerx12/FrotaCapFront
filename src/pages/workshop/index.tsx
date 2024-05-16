@@ -46,10 +46,10 @@ const Workshop = () => {
             <FaArrowsRotate className="group-hover:rotate-180 duration-300" />
           </button>
         </div>
-        <div className="w-11/12 overflow-auto border mt-6 mx-auto h-5/6 rounded  flex items-center gap-4">
+        <div className="w-11/12 overflow-auto border mt-6 mx-auto h-5/6 rounded  flex p-2 gap-4">
           {isLoading ? (
             <p>Carregando...</p>
-          ) : (
+          ) : data && data.length > 0 ? (
             <>
               {deliverToTheWorkshop && deliverToTheWorkshop.length > 0 && (
                 <WaitingForDeliveringFolder requests={deliverToTheWorkshop} />
@@ -70,6 +70,10 @@ const Workshop = () => {
                 <CollectedFolder requests={collected} />
               )}
             </>
+          ) : (
+            <p className="text-center w-full">
+              Nenhuma solicitação encontrada!
+            </p>
           )}
         </div>
       </div>

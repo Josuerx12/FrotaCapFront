@@ -22,6 +22,7 @@ import { useTimeCalc } from "../../../../hooks/useTimeCalc";
 import { GiCarKey } from "react-icons/gi";
 import DeliverVehicleModal from "../actions/deliverVehicle";
 import IsDeletingModal from "../actions/isDeleting";
+import { GrDocumentPdf } from "react-icons/gr";
 
 type Props = {
   show: boolean;
@@ -109,11 +110,29 @@ const MaintenceRequestDetails = ({ show, handleClose, request }: Props) => {
         <form>
           <div className="flex flex-col gap-2">
             {request.protocol && (
-              <h2 className="text-2xl">
+              <h2 className="text-xl">
                 <span className="font-bold">Nº Protocolo: </span>{" "}
                 {request.protocol}
               </h2>
             )}
+            {request.os && (
+              <div className="flex flex-col gap-1">
+                <h2>
+                  Numero da O.S. <span>{request.os}</span>
+                </h2>
+                {request.osDocuments && request.osDocuments?.length > 0 && (
+                  <a
+                    className="text-blue-600 hover:text-blue-400 cursor-pointer w-fit flex gap-1 items-center"
+                    title="Baixar Ordem de Serviço em PDF!"
+                    href={request.osDocuments[0].url}
+                    download={true}
+                  >
+                    Baixar O.S. <GrDocumentPdf />
+                  </a>
+                )}
+              </div>
+            )}
+
             <h3 className="font-semibold capitalize">Dados do solicitante:</h3>
             <div className="flex gap-4 flex-wrap">
               <div className="flex flex-col basis-52 flex-grow">

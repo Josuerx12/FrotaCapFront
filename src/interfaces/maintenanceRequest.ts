@@ -3,6 +3,7 @@ import { IWorkshop } from "./workShop";
 
 export interface IMaintenceRequest {
   id: number;
+  os: number;
   plate: string;
   driverName: string;
   driverPhone: string;
@@ -30,15 +31,22 @@ export interface IMaintenceRequest {
   checkoutBy?: string;
   checkoutAt?: Date | string;
   budgets?: IBudget[];
+  osDocuments?: IOsDocument[];
   createdAt: Date;
   updatedAt: Date;
   evidence?: IEvidence[];
 }
 
+export interface IOsDocument {
+  id: number;
+  url: string;
+  maintanceId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface IBudget {
   id: number;
   url: string;
-  path: string;
   maintanceId: number;
   createdAt: Date;
   updatedAt: Date;
