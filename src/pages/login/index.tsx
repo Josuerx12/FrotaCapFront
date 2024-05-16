@@ -10,7 +10,7 @@ const AuthPage = () => {
   const [loginState, setLoginState] = useState(0);
 
   return (
-    <section className="w-7/12 mx-auto h-full  min-h-screen flex flex-col gap-5 items-center">
+    <section className="w-11/12 md:w-7/12 mx-auto h-full  min-h-screen flex flex-col gap-5 items-center">
       <h3 className="text-3xl font-bold text-neutral-800 py-3 mt-28 text-center">
         Bem vindo ao FrotasCAP!
       </h3>{" "}

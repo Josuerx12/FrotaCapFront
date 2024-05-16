@@ -51,7 +51,7 @@ const HomeSlider = ({ imgs }: { imgs: ImgUrlArray }) => {
           ))}
         </div>
 
-        <div className="md:hidden flex absolute z-50 w-full h-full inset-0 md:group-hover:flex justify-between items-center p-2">
+        <div className="md:hidden flex absolute z-10 w-full h-full inset-0 md:group-hover:flex justify-between items-center p-2">
           <button
             className="bg-black/60 rounded-full h-fit p-2 text-white"
             onClick={prevSlider}
