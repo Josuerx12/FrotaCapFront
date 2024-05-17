@@ -3,12 +3,13 @@ import { IWorkshop } from "../../../../interfaces/workShop";
 import Modal from "../../modal";
 import { FaPen, FaSpinner, FaTimes, FaTrash } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   EditWorkshopCredentials,
   useWorkshop,
 } from "../../../../hooks/useWorkshop";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 type Props = {
   show: boolean;
   handleClose: () => void;
@@ -28,6 +29,8 @@ const WorkshopDetailModal = ({ handleClose, show, ws }: Props) => {
     },
   });
 
+  const query = useQueryClient();
+
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -35,7 +38,17 @@ const WorkshopDetailModal = ({ handleClose, show, ws }: Props) => {
 
   const { mutateAsync, reset, isLoading } = useMutation(
     "editWorkshop",
-    editWorkshop
+    editWorkshop,
+    {
+      onSuccess: (data) => {
+        Promise.all([
+          toast.success(data),
+          handleClose(),
+          query.invalidateQueries("workshops"),
+          resetForm(),
+        ]);
+      },
+    }
   );
 
   async function onSubmit(data: EditWorkshopCredentials) {

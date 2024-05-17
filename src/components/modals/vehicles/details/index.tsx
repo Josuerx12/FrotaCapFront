@@ -53,9 +53,9 @@ const VehicleDetailModal = ({ show, handleClose, vehicle }: Props) => {
     onSuccess: (data) =>
       Promise.all([
         query.invalidateQueries("vehicles"),
-        reset(),
         handleClose(),
         toast.success(data),
+        reset(),
       ]),
   });
 

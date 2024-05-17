@@ -3,7 +3,7 @@ import { Footer } from "./components/footer";
 import { Navbar } from "./components/navbar";
 import { Home } from "./pages/home";
 import Requests from "./pages/requests";
-import { Bounce, ToastContainer } from "react-toastify";
+import { Flip, ToastContainer } from "react-toastify";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useAuth } from "./store/useAuth";
@@ -78,8 +78,8 @@ const App = () => {
         />
       </Routes>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position="top-center"
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -87,8 +87,8 @@ const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
-        transition={Bounce}
+        theme="dark"
+        transition={Flip}
       />
       <Footer />
     </main>
