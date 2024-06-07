@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { api } from "../config/api";
-import Cookies from "js-cookie";
 
 export type VehicleCredentials = {
   name: string;
@@ -19,13 +18,11 @@ export type EditCredentials = {
 };
 
 const useVehicle = () => {
-  const token = Cookies.get("refreshToken");
-
   async function CreateVehicle(
     credentials: VehicleCredentials
   ): Promise<string> {
     try {
-      const res = await api(token).post("/vehicle", credentials);
+      const res = await api.post("/vehicle", credentials);
 
       return res.data;
     } catch (error: any) {
@@ -38,7 +35,7 @@ const useVehicle = () => {
     credentials,
   }: EditCredentials): Promise<string> {
     try {
-      const res = await api(token).patch("/vehicle/" + id, credentials);
+      const res = await api.patch("/vehicle/" + id, credentials);
 
       return res.data;
     } catch (error: any) {
@@ -48,7 +45,7 @@ const useVehicle = () => {
 
   async function DeleteVehicle(id: number): Promise<string> {
     try {
-      const res = await api(token).delete("/vehicle/" + id);
+      const res = await api.delete("/vehicle/" + id);
 
       return res.data;
     } catch (error: any) {

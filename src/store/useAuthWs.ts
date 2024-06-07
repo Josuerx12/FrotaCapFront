@@ -23,11 +23,13 @@ const useAuthWs = create<State & Actions>((set) => ({
   workshop: undefined,
   login: async (credentials: AuthCredentials) => {
     try {
-      const res = await api().post("/auth/login/ws", credentials);
+      const res = await api.post("/auth/login/ws", credentials);
 
       const token = res.data.token;
 
       Cookies.set("workshopToken", token);
+
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       return "Login realizado com sucesso!";
     } catch (error: any) {
@@ -35,12 +37,8 @@ const useAuthWs = create<State & Actions>((set) => ({
     }
   },
   getWs: async () => {
-    const token = Cookies.get("workshopToken");
-
     try {
-      const res = await (
-        await api(token).get("/workshop/detail")
-      ).data.workshop;
+      const res = await (await api.get("/workshop/detail")).data.workshop;
 
       set(() => ({ workshop: res }));
 
@@ -52,6 +50,7 @@ const useAuthWs = create<State & Actions>((set) => ({
   logout: () => {
     Cookies.remove("workshopToken");
     set(() => ({ workshop: undefined }));
+    api.defaults.headers.common.Authorization = "";
   },
 }));
 

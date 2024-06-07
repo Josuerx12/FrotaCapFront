@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Cookies from "js-cookie";
 import { api } from "../config/api";
 
 export type CreateMaintanceCredentials = {
@@ -24,13 +23,10 @@ export type EditMaintanceCredentials = {
 };
 
 const useMaintance = () => {
-  const token = Cookies.get("refreshToken");
-  const wsToken = Cookies.get("workshopToken");
-
   async function createMaintance(credentials: CreateMaintanceCredentials) {
     try {
       credentials.os = Number(credentials.os);
-      const res = await api(token).post("/maintance-request", credentials);
+      const res = await api.post("/maintance-request", credentials);
 
       return res.data;
     } catch (error: any) {
@@ -87,10 +83,7 @@ const useMaintance = () => {
     }
 
     try {
-      const res = await api(token ? token : wsToken).patch(
-        "/maintance-request/" + id,
-        formData
-      );
+      const res = await api.patch("/maintance-request/" + id, formData);
 
       return res.data;
     } catch (error: any) {
@@ -100,7 +93,7 @@ const useMaintance = () => {
 
   async function deleteMaintanance(id: string) {
     try {
-      const res = await api(token).delete("/maintance-request/" + id);
+      const res = await api.delete("/maintance-request/" + id);
       return res.data;
     } catch (error: any) {
       throw error.response.data;

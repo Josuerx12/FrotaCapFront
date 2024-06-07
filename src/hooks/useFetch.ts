@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
-import Cookies from "js-cookie";
 import { api } from "../config/api";
 import { IMaintenceRequest } from "../interfaces/maintenanceRequest";
 import { IUser } from "../interfaces/user";
@@ -9,12 +8,9 @@ import { IProvider } from "../interfaces/provider";
 import { IWorkshop } from "../interfaces/workShop";
 
 function useFetch() {
-  const token = Cookies.get("refreshToken");
-  const wsToken = Cookies.get("workshopToken");
-
   async function fetchAllMaintenceRequests(): Promise<IMaintenceRequest[]> {
     try {
-      const res = (await api(token).get("/maintance-request")).data.requests;
+      const res = (await api.get("/maintance-request")).data.requests;
       return res;
     } catch (error: any) {
       throw error.response.data;
@@ -22,8 +18,7 @@ function useFetch() {
   }
   async function fetchUserMaintenceRequests(): Promise<IMaintenceRequest[]> {
     try {
-      const res = (await api(token).get("/maintance-request/user")).data
-        .requests;
+      const res = (await api.get("/maintance-request/user")).data.requests;
       return res;
     } catch (error: any) {
       throw error.response.data;
@@ -33,8 +28,7 @@ function useFetch() {
     IMaintenceRequest[]
   > {
     try {
-      const res = (await api(wsToken).get("/maintance-request/ws")).data
-        .requests;
+      const res = (await api.get("/maintance-request/ws")).data.requests;
 
       return res;
     } catch (error: any) {
@@ -44,7 +38,7 @@ function useFetch() {
 
   async function fetchUsers(): Promise<IUser[]> {
     try {
-      const res = (await api(token).get("/user")).data.users;
+      const res = (await api.get("/user")).data.users;
       return res;
     } catch (error: any) {
       throw error.response.data;
@@ -53,7 +47,7 @@ function useFetch() {
 
   async function fetchWorkshops(): Promise<IWorkshop[]> {
     try {
-      const res = (await api(token).get("/workshop")).data.workshops;
+      const res = (await api.get("/workshop")).data.workshops;
       return res;
     } catch (error: any) {
       throw error.response.data;
@@ -62,7 +56,7 @@ function useFetch() {
 
   async function fetchVehicles(): Promise<IVehicle[]> {
     try {
-      const res = (await api(token).get("/vehicle")).data.vehicles;
+      const res = (await api.get("/vehicle")).data.vehicles;
       return res;
     } catch (error: any) {
       throw error.response.data;
@@ -71,7 +65,7 @@ function useFetch() {
 
   async function fetchProviders(): Promise<IProvider[]> {
     try {
-      const res = (await api(token).get("/provider")).data.providers;
+      const res = (await api.get("/provider")).data.providers;
       return res;
     } catch (error: any) {
       throw error.response.data;

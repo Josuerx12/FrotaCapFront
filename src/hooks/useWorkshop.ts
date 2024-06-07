@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "../config/api";
-import Cookies from "js-cookie";
 
 export type CreateWorkshopCredentials = {
   email: string;
@@ -25,13 +24,11 @@ export type EditWorkshopCredentials = {
 };
 
 function useWorkshop() {
-  const token = Cookies.get("refreshToken");
-
   async function createWorkshop(
     credentials: CreateWorkshopCredentials
   ): Promise<string> {
     try {
-      const res = (await api(token).post("/workshop", credentials)).data;
+      const res = (await api.post("/workshop", credentials)).data;
 
       return res;
     } catch (error: any) {
@@ -41,7 +38,7 @@ function useWorkshop() {
 
   async function deleteWorkshop(id: number): Promise<string> {
     try {
-      const res = (await api(token).delete("/workshop/" + id)).data;
+      const res = (await api.delete("/workshop/" + id)).data;
 
       return res;
     } catch (error: any) {
@@ -57,7 +54,7 @@ function useWorkshop() {
     credentials: EditWorkshopCredentials;
   }): Promise<string> {
     try {
-      const res = (await api(token).patch("/workshop/" + id, credentials)).data;
+      const res = (await api.patch("/workshop/" + id, credentials)).data;
 
       return res;
     } catch (error: any) {

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Cookies from "js-cookie";
 import { api } from "../config/api";
 
 export type CreateProviderCredentials = {
@@ -7,13 +6,11 @@ export type CreateProviderCredentials = {
 };
 
 const useProvider = () => {
-  const token = Cookies.get("refreshToken");
-
   async function create(
     credentials: CreateProviderCredentials
   ): Promise<string> {
     try {
-      const res = await api(token).post("/provider", credentials);
+      const res = await api.post("/provider", credentials);
 
       return res.data;
     } catch (error: any) {
@@ -29,7 +26,7 @@ const useProvider = () => {
     credentials: any;
   }): Promise<string> {
     try {
-      const res = await api(token).patch("/provider/" + id, credentials);
+      const res = await api.patch("/provider/" + id, credentials);
 
       return res.data;
     } catch (error: any) {
@@ -39,7 +36,7 @@ const useProvider = () => {
 
   async function deleteProvider(id: number): Promise<string> {
     try {
-      const res = await api(token).delete("/provider/" + id);
+      const res = await api.delete("/provider/" + id);
 
       return res.data;
     } catch (error: any) {

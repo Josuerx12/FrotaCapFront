@@ -23,11 +23,13 @@ const useAuth = create<State & Actions>((set) => ({
   user: undefined,
   login: async (credentials: AuthCredentials) => {
     try {
-      const res = await api().post("/auth/login", credentials);
+      const res = await api.post("/auth/login", credentials);
 
       const token = res.data.token;
 
       Cookies.set("refreshToken", token);
+
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       return "Login realizado com sucesso!";
     } catch (error: any) {
@@ -35,12 +37,8 @@ const useAuth = create<State & Actions>((set) => ({
     }
   },
   getUser: async () => {
-    const token = Cookies.get("refreshToken");
-
     try {
-      const res = await (
-        await api(token).get("/user/profile/detail")
-      ).data.user;
+      const res = await (await api.get("/user/profile/detail")).data.user;
 
       set(() => ({ user: res }));
 
@@ -52,6 +50,7 @@ const useAuth = create<State & Actions>((set) => ({
   logout: () => {
     Cookies.remove("refreshToken");
     set(() => ({ user: undefined }));
+    api.defaults.headers.common.Authorization = "";
   },
 }));
 
