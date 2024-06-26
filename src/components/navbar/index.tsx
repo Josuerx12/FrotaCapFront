@@ -28,7 +28,7 @@ const Navbar = () => {
           className="flex gap-2 text-white items-center cursor-pointer  bg-size-200 bg-pos-0 hover:bg-pos-100 bg-gradient-to-l to-sky-300 via-sky-600 from-sky-500 duration-300 ease-linear transition-all p-2 drop-shadow-xl rounded-xl"
         >
           <h1 className="font-signature text-5xl font-bold  drop-shadow-lg">
-            Frotascap
+            Frotacap
           </h1>
           <FaCar size={40} />
         </div>
